@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>window</class>
+ <widget class="QMainWindow" name="window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1127</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableWidget" name="log_table">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1111</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::SolidLine</enum>
+    </property>
+    <column>
+     <property name="text">
+      <string>Ticket ID</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Problem</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Hardware</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Assigned To</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Complainer</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Date &amp; Time</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Location</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>System Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Remark</string>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1127</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMaster">
+    <property name="title">
+     <string>Master</string>
+    </property>
+    <widget class="QMenu" name="menuHardware">
+     <property name="title">
+      <string>Hardware</string>
+     </property>
+     <addaction name="add_hardware"/>
+     <addaction name="edit_hardware"/>
+    </widget>
+    <widget class="QMenu" name="location_menu">
+     <property name="title">
+      <string>Location</string>
+     </property>
+     <addaction name="add_location"/>
+     <addaction name="edit_location"/>
+    </widget>
+    <widget class="QMenu" name="user_menu">
+     <property name="title">
+      <string>User</string>
+     </property>
+     <addaction name="add_user"/>
+     <addaction name="edit_user"/>
+     <addaction name="separator"/>
+     <addaction name="rst_pass"/>
+    </widget>
+    <widget class="QMenu" name="menuBrand">
+     <property name="title">
+      <string>Brand</string>
+     </property>
+     <addaction name="add_brand"/>
+     <addaction name="edit_brand"/>
+    </widget>
+    <widget class="QMenu" name="menuProblem">
+     <property name="title">
+      <string>Problem</string>
+     </property>
+     <addaction name="add_pbt"/>
+     <addaction name="edit_pbt"/>
+    </widget>
+    <addaction name="user_menu"/>
+    <addaction name="location_menu"/>
+    <addaction name="separator"/>
+    <addaction name="menuHardware"/>
+    <addaction name="menuBrand"/>
+    <addaction name="separator"/>
+    <addaction name="menuProblem"/>
+    <addaction name="separator"/>
+    <addaction name="actionLog_Out"/>
+    <addaction name="close_window"/>
+   </widget>
+   <widget class="QMenu" name="menuOperations">
+    <property name="title">
+     <string>Operations</string>
+    </property>
+    <addaction name="report"/>
+    <addaction name="cmplnt"/>
+    <addaction name="separator"/>
+    <addaction name="refresh"/>
+    <addaction name="full_log"/>
+    <addaction name="com_log"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="about"/>
+    <addaction name="lic"/>
+    <addaction name="manual"/>
+   </widget>
+   <addaction name="menuMaster"/>
+   <addaction name="menuOperations"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="report">
+   <property name="text">
+    <string>Generate Report</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="cmplnt">
+   <property name="text">
+    <string>Complaint</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="about">
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>How To...</string>
+   </property>
+  </action>
+  <action name="lic">
+   <property name="text">
+    <string>License</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionAdd_2">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="add_location">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="edit_location">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="add_user">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="edit_user">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="add_hardware">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="edit_hardware">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="add_brand">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="edit_brand">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="add_pbt">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="edit_pbt">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionAdd_8">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionEdit_7">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionAdd_9">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionEdit_8">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="close_window">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="refresh">
+   <property name="text">
+    <string>Refresh Log</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="full_log">
+   <property name="text">
+    <string>Full Log</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionFinished_Log">
+   <property name="text">
+    <string>Finished Log</string>
+   </property>
+  </action>
+  <action name="com_log">
+   <property name="text">
+    <string>Completed Log</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="get_help">
+   <property name="text">
+    <string>Help</string>
+   </property>
+  </action>
+  <action name="manual">
+   <property name="text">
+    <string>Manual</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="rst_pass">
+   <property name="text">
+    <string>Reset Password</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionLog_Out">
+   <property name="text">
+    <string>Log Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+L</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

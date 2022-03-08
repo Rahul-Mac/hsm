@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1332</width>
+    <height>611</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLineEdit" name="search">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>1311</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Search...</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="log_table">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>1311</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>TIcket ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Problem</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Hardware</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Assigned To</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Complainer</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Date &amp; Time</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Location</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Name</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>System Name</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Pending</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>User Remark</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Solved By</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Solver Remark</string>
+    </property>
+   </column>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

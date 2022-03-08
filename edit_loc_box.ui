@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>363</width>
+    <height>204</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="details_box">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>341</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Details</string>
+   </property>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>321</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="flr_label_2">
+       <property name="text">
+        <string>Floor</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="flr_combo">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <item>
+        <property name="text">
+         <string>-- Select --</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Basement</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1st Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2nd Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3rd Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>6th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>7th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>9th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10th Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>11th Floor</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="ecode_label">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="wing_combo">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <item>
+        <property name="text">
+         <string>-- Select --</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>A Wing</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>B Wing</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="wing_label_2">
+       <property name="text">
+        <string>Wing</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="2">
+      <widget class="QPushButton" name="loc_update_btn">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" colspan="2">
+      <widget class="QPushButton" name="loc_reset_btn">
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QCheckBox" name="loc_active">
+       <property name="font">
+        <font>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="text">
+        <string>Is Active?</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

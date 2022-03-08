@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>672</width>
+    <height>613</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPlainTextEdit" name="plainTextEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>651</width>
+     <height>591</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+   <property name="plainText">
+    <string>Hardware Service Manager (HSM)
+
+HSM is a desktop application used for servicing hardware components.
+It has two modes - Admin and Client.
+
+Login
+
+The user should enter their login credentials to access the software.
+Depending on the privileges, the user will be directed to a screen.
+
+Menu
+
+The HSM menu bar has three tabs - Master, Operations, and Help.
+
+Master
+
+User =&gt; Add
+	Adding a new user
+
+User =&gt; Edit
+	Editing new user data 
+
+User =&gt; Reset Password (Ctrl+P)
+	Changing the password
+
+Location =&gt; Add
+	Adding a new location
+
+Location =&gt; Edit
+	Editing new location data 
+
+Hardware =&gt; Add
+	Adding a new hardware 
+
+Hardware =&gt; Edit
+	Editing new hardware data 
+
+Brand =&gt; Add
+	Adding a new brand 
+
+Brand =&gt; Edit
+	Editing new brand data
+
+Problem =&gt; Add
+	Adding a new problem 
+
+Problem =&gt; Edit
+	Editing new problem data
+
+Log Out (Alt+L)
+	Closes the session
+
+Close
+	Closes the application
+
+Operations
+
+Generate Report (Shortcut - Ctrl+G)
+	A popup will appear which asks for the file name,
+	folder, start date and end date. After clicking on
+	&quot;Export&quot;, a .csv file will be generated in the 
+	mentioned file location. 	
+	&quot;Reset&quot; button clears the details entered.
+
+Complaint (Shortcut - Ctrl+C)
+
+	&quot;Ticked ID&quot; 
+		It is an auto-generated field.
+
+	Hardware
+		The hardware that needs 
+		servicing should be selected.
+
+	Problem
+		The issue with the selected hardware.
+
+	System Name (Optional Field)
+		Name assigned to the hardware.
+
+	Location
+		Location of the hardware.
+
+	Spoken To
+		The name of the administrator 
+		with whom the client spoke.
+
+	Caller Name (Optional Field)
+		Name of the client
+
+	Remarks (Optional Field)
+		Additional information about 
+		the hardware that the 
+		client wants to provide.
+
+	Save
+		Registers the complaint.
+
+	Reset
+		Resets the data.
+
+Refresh Log (Shortcut - Ctrl+R)
+	Refreshes the &quot;Pending Log&quot; i.e. 
+	the log on the window.
+
+Full Log (Shortcut - Ctrl+F)
+	Dsiplays all the complaints.
+
+Completed Log (Shortcut - Ctrl+D)
+	Dsiplays the solved issues.
+
+
+Help
+
+About (Ctrl+A)
+	Brief information about the software
+
+License (Ctrl+L)
+	License of the software 
+
+Manual (Ctrl+M)
+	The document that you are currently reading
+
+Toolbar
+	Icons for operations like Refresh, Adding users,
+	Generating Report, etc.
+
+
+Written by
+	Rahul Mac</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

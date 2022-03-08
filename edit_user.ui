@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>edit_user</class>
+ <widget class="QDialog" name="edit_user">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1012</width>
+    <height>611</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTableWidget" name="log">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>991</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>User ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Is Active?</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>User Type</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Employee Code</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>UserName</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLineEdit" name="search">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>991</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Search...</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
