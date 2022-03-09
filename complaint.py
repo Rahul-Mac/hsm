@@ -63,15 +63,13 @@ class complaint(QtWidgets.QDialog):
         n = self.opt_name.text()
         a = self.ad_combo.currentText()
         try:
-            if a == "" or u == "" or a == "-- Select --" or l == "" or l == "-- Select --" or t == "" or h == "" or h == "-- Select --" or p == "" or p == "-- Select --":
+            if a == "" or u == "" or a == "-- Select --" or l == "" or l == "-- Select --" or t == "" or h == "" or h == "-- Select --" or p == "" or p == "-- Select --" or n == "":
                 raise Exception()
             else:
                 if b == "":
                     b = "NULL"
                 if r == "": 
                     r = "NULL"
-                if  n == "":
-                    n = "NULL"
                 sql = "INSERT INTO transaction (TicketId, ProblemId, HardwareId, CreatedUserId, CreatedDateTime, Remark, SystemName, LocationId, Name, AdminId) VALUES \
                 ('"+t+"', "+str(p)+", "+str(h)+", '"+u+"', '"+d+"','"+r+"', '"+str(b)+"', '"+str(l)+"', '"+n+"', '"+str(a)+"')"
                 global_variable.mycursor.execute(sql)

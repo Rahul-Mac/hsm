@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>692</width>
     <height>301</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>481</width>
+     <width>671</width>
      <height>271</height>
     </rect>
    </property>
@@ -33,7 +33,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>461</width>
+      <width>651</width>
       <height>235</height>
      </rect>
     </property>
@@ -176,7 +176,7 @@
      <item row="3" column="1" colspan="7">
       <widget class="QLineEdit" name="opt_name">
        <property name="placeholderText">
-        <string>(Optional)</string>
+        <string/>
        </property>
       </widget>
      </item>
