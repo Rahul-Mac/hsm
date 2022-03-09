@@ -89,6 +89,11 @@
        </item>
        <item>
         <property name="text">
+         <string>Ground Floor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>1st Floor</string>
         </property>
        </item>

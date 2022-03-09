@@ -64,7 +64,7 @@ class complaint(QtWidgets.QDialog):
         a = self.ad_combo.currentText()
         try:
             if a == "" or u == "" or a == "-- Select --" or l == "" or l == "-- Select --" or t == "" or h == "" or h == "-- Select --" or p == "" or p == "-- Select --" or n == "":
-                raise Exception()
+                QMessageBox.critical(self, "Error", "All the compulsory fields must be filled")
             else:
                 if b == "":
                     b = "NULL"

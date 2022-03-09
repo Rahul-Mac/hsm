@@ -18,6 +18,5 @@ import login
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyle('Fusion')
     window = login.login()
     app.exec_()
