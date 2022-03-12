@@ -76,6 +76,8 @@ class edit_hwt(QtWidgets.QDialog):
         global_variable.mycursor.execute("SELECT IsActive, HardwareName from hardwaretype;")
         data = global_variable.mycursor.fetchall()
         self.log.setRowCount(0)
+        if len(data) == 0:
+            return 
         try:
             row = len(data)
             col = len(data[0])

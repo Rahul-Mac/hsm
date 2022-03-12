@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>window</class>
- <widget class="QMainWindow" name="window">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1127</width>
+    <width>800</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,11 +14,647 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="log_table">
+   <widget class="QTabWidget" name="ribbon">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
+      <width>741</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QToolBar {
+    padding: 0px;
+}
+
+QTabWidget:pane {
+	border-radius: 0px;
+	margin:0px;
+	padding: 0px;
+    background-color: qlineargradient(x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 #efefef, stop: 0.5 #e5e5e5, stop: 1.0 #fdfdfd);
+    border-bottom: 1px solid rgba(0,0,0,20%);
+    border-top: 1px solid rgba(0,0,0,20%);
+    top: -1;
+}
+QTabWidget{
+
+}
+
+QTabWidget::tab-bar {
+    left: 2px;
+}
+
+QTabBar::tab {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    margin-right:5px;
+    color:#2A2A2A;
+ }
+
+QTabBar::tab:hover {
+    background: rgba(255, 119, 0, 20%);
+}
+
+QTabBar::tab:selected{
+    background: qlineargradient(x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 #fdfdfd, stop: 1.0 #efefef);
+    color: #2A2A2A;
+
+    border: 1px solid rgba(0,0,0,20%);
+    border-bottom-color: #f9f9f9;
+}
+QToolButton {
+    text-align: left;
+    border: 1px solid transparent;
+    padding: 0px;
+    margin-left:2px;
+    margin-right:2px;
+}
+
+QToolButton:hover {
+    border: 1px solid rgba(120,160,255,60%);
+    background-color: QLinearGradient(spread:pad, x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 rgba(150,180,200,30%),stop: 0.5 rgba(225,235,245,60%), stop: 1 rgba(225,235,245,30%));
+}
+
+QToolButton:pressed{
+    border: 1px solid rgba(120,160,255,80%);
+    background-color: QLinearGradient(spread:pad, x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 rgba(150,180,200,50%),stop: 0.5 rgba(225,235,245,80%), stop: 1 rgba(225,235,245,50%));
+}
+
+QToolButton:checked{
+    border: 1px solid rgba(120,160,255,40%);
+    background-color: rgba(0,0,0,10%)
+}</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>add.png</normaloff>add.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Add</string>
+     </attribute>
+     <widget class="QToolButton" name="add_user">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>User</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>user.ico</normaloff>user.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="add_brand">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Brand</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>brand.ico</normaloff>brand.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="add_location">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Location</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>location.ico</normaloff>location.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="add_hardware">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Hardware</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>hardware.ico</normaloff>hardware.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="add_pbt">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Problem</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>problem.ico</normaloff>problem.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>edit.png</normaloff>edit.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Edit</string>
+     </attribute>
+     <widget class="QToolButton" name="edit_location">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Location</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>location.ico</normaloff>location.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="edit_user">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>User</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>user.ico</normaloff>user.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="edit_hardware">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Hardware</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>hardware.ico</normaloff>hardware.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="edit_brand">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Brand</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>brand.ico</normaloff>brand.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="edit_pbt">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Problem</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>problem.ico</normaloff>problem.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="rst_pass">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Problem</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>pass.png</normaloff>pass.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>task.ico</normaloff>task.ico</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Tasks</string>
+     </attribute>
+     <widget class="QToolButton" name="report">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Report</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>report.ico</normaloff>report.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="full_log">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Full Log</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>full_log.png</normaloff>full_log.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="actionLog_Out">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Log out</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>exit.png</normaloff>exit.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="com_log">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Completed</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>com_log.png</normaloff>com_log.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="refresh">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Refresh Table</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>refresh.png</normaloff>refresh.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="cmplnt">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Complaint</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>complaint.png</normaloff>complaint.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>help.png</normaloff>help.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Help</string>
+     </attribute>
+     <widget class="QToolButton" name="about">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>About</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>about.ico</normaloff>about.ico</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="manual">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Manual</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>manual.png</normaloff>manual.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="lic">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>71</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>License</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>license.webp</normaloff>license.webp</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QTableWidget" name="log_table">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>130</y>
       <width>1111</width>
       <height>192</height>
      </rect>
@@ -84,276 +720,6 @@
     </column>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1127</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuMaster">
-    <property name="title">
-     <string>Master</string>
-    </property>
-    <widget class="QMenu" name="menuHardware">
-     <property name="title">
-      <string>Hardware</string>
-     </property>
-     <addaction name="add_hardware"/>
-     <addaction name="edit_hardware"/>
-    </widget>
-    <widget class="QMenu" name="location_menu">
-     <property name="title">
-      <string>Location</string>
-     </property>
-     <addaction name="add_location"/>
-     <addaction name="edit_location"/>
-    </widget>
-    <widget class="QMenu" name="user_menu">
-     <property name="title">
-      <string>User</string>
-     </property>
-     <addaction name="add_user"/>
-     <addaction name="edit_user"/>
-     <addaction name="separator"/>
-     <addaction name="rst_pass"/>
-    </widget>
-    <widget class="QMenu" name="menuBrand">
-     <property name="title">
-      <string>Brand</string>
-     </property>
-     <addaction name="add_brand"/>
-     <addaction name="edit_brand"/>
-    </widget>
-    <widget class="QMenu" name="menuProblem">
-     <property name="title">
-      <string>Problem</string>
-     </property>
-     <addaction name="add_pbt"/>
-     <addaction name="edit_pbt"/>
-    </widget>
-    <addaction name="user_menu"/>
-    <addaction name="location_menu"/>
-    <addaction name="separator"/>
-    <addaction name="menuHardware"/>
-    <addaction name="menuBrand"/>
-    <addaction name="separator"/>
-    <addaction name="menuProblem"/>
-    <addaction name="separator"/>
-    <addaction name="actionLog_Out"/>
-    <addaction name="close_window"/>
-   </widget>
-   <widget class="QMenu" name="menuOperations">
-    <property name="title">
-     <string>Operations</string>
-    </property>
-    <addaction name="report"/>
-    <addaction name="cmplnt"/>
-    <addaction name="separator"/>
-    <addaction name="refresh"/>
-    <addaction name="full_log"/>
-    <addaction name="com_log"/>
-   </widget>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="about"/>
-    <addaction name="lic"/>
-    <addaction name="manual"/>
-   </widget>
-   <addaction name="menuMaster"/>
-   <addaction name="menuOperations"/>
-   <addaction name="menuAbout"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="report">
-   <property name="text">
-    <string>Generate Report</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+G</string>
-   </property>
-  </action>
-  <action name="cmplnt">
-   <property name="text">
-    <string>Complaint</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
-   </property>
-  </action>
-  <action name="about">
-   <property name="text">
-    <string>About</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+A</string>
-   </property>
-  </action>
-  <action name="actionHelp">
-   <property name="text">
-    <string>How To...</string>
-   </property>
-  </action>
-  <action name="lic">
-   <property name="text">
-    <string>License</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+L</string>
-   </property>
-  </action>
-  <action name="actionAdd">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="actionAdd_2">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="actionEdit">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="add_location">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="edit_location">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="add_user">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="edit_user">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="add_hardware">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="edit_hardware">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="add_brand">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="edit_brand">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="add_pbt">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="edit_pbt">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="actionAdd_8">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="actionEdit_7">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="actionAdd_9">
-   <property name="text">
-    <string>Add</string>
-   </property>
-  </action>
-  <action name="actionEdit_8">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="close_window">
-   <property name="text">
-    <string>Close</string>
-   </property>
-  </action>
-  <action name="refresh">
-   <property name="text">
-    <string>Refresh Log</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+R</string>
-   </property>
-  </action>
-  <action name="full_log">
-   <property name="text">
-    <string>Full Log</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F</string>
-   </property>
-  </action>
-  <action name="actionFinished_Log">
-   <property name="text">
-    <string>Finished Log</string>
-   </property>
-  </action>
-  <action name="com_log">
-   <property name="text">
-    <string>Completed Log</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
-   </property>
-  </action>
-  <action name="get_help">
-   <property name="text">
-    <string>Help</string>
-   </property>
-  </action>
-  <action name="manual">
-   <property name="text">
-    <string>Manual</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+M</string>
-   </property>
-  </action>
-  <action name="rst_pass">
-   <property name="text">
-    <string>Reset Password</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
-  </action>
-  <action name="actionLog_Out">
-   <property name="text">
-    <string>Log Out</string>
-   </property>
-   <property name="shortcut">
-    <string>Alt+L</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

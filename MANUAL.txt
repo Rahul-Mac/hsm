@@ -8,61 +8,29 @@ Login
 The user should enter their login credentials to access the software.
 Depending on the privileges, the user will be directed to a screen.
 
-Menu
+Ribbon Bar
 
-The HSM menu bar has three tabs - Master, Operations, and Help.
+The HSM ribbon bar has four tabs - Add, Edit, Tasks and Help.
 
-Master
+Add
+	Buttons for adding
+	User, Location, Hardware, Brand, and Problem
 
-User => Add
-	Adding a new user
+Edit
+	Buttons for editing
+	User, Location, Hardware, Brand, Problem
+	and Resetting password
 
-User => Edit
-	Editing new user data 
+Tasks
 
-User => Reset Password (Ctrl+P)
-	Changing the password
-
-Location => Add
-	Adding a new location
-
-Location => Edit
-	Editing new location data 
-
-Hardware => Add
-	Adding a new hardware 
-
-Hardware => Edit
-	Editing new hardware data 
-
-Brand => Add
-	Adding a new brand 
-
-Brand => Edit
-	Editing new brand data
-
-Problem => Add
-	Adding a new problem 
-
-Problem => Edit
-	Editing new problem data
-
-Log Out (Alt+L)
-	Closes the session
-
-Close
-	Closes the application
-
-Operations
-
-Generate Report (Shortcut - Ctrl+G)
+Generate Report
 	A popup will appear which asks for the file name,
 	folder, start date and end date. After clicking on
 	"Export", a .csv file will be generated in the 
 	mentioned file location. 	
 	"Reset" button clears the details entered.
 
-Complaint (Shortcut - Ctrl+C)
+Complaint 
 
 	"Ticked ID" 
 		It is an auto-generated field.
@@ -84,7 +52,7 @@ Complaint (Shortcut - Ctrl+C)
 		The name of the administrator 
 		with whom the client spoke.
 
-	Caller Name (Optional Field)
+	Caller Name
 		Name of the client
 
 	Remarks (Optional Field)
@@ -98,26 +66,26 @@ Complaint (Shortcut - Ctrl+C)
 	Reset
 		Resets the data.
 
-Refresh Log (Shortcut - Ctrl+R)
+Refresh Log
 	Refreshes the "Pending Log" i.e. 
 	the log on the window.
 
-Full Log (Shortcut - Ctrl+F)
+Full Log 
 	Dsiplays all the complaints.
 
-Completed Log (Shortcut - Ctrl+D)
+Completed Log 
 	Dsiplays the solved issues.
 
 
 Help
 
-About (Ctrl+A)
+About 
 	Brief information about the software
 
-License (Ctrl+L)
+License 
 	License of the software 
 
-Manual (Ctrl+M)
+Manual 
 	The document that you are currently reading
 
 Toolbar

@@ -32,9 +32,7 @@ import edit_brand
 import add_pbt
 import edit_pbt
 import complaint
-import about
 import ticket
-import lic
 import generate_report
 import full_log
 import com_log
@@ -50,43 +48,10 @@ class window(QtWidgets.QMainWindow):
         self.measurement()
         self.connections()
         self.view_table()
-        self.tool_bar()
+        self.refresh.setText("Refresh\nTable")
+        self.com_log.setText("Completed\nTable")
+        self.rst_pass.setText("Reset\nPassword")
         self.show()
-
-    def tool_bar(self):
-        tb = self.addToolBar("Tools")
-        tb.addAction(QAction(QIcon("refresh.ico"), "Refresh Pending Log", self))
-        tb.addAction(QAction(QIcon("user.ico"), "Add User", self))
-        tb.addAction(QAction(QIcon("location.ico"), "Add Location", self))
-        tb.addAction(QAction(QIcon("hardware.ico"), "Add Hardware", self))
-        tb.addAction(QAction(QIcon("brand.ico"), "Add Brand", self))
-        tb.addAction(QAction(QIcon("problem.ico"), "Add Problem", self))
-        tb.addAction(QAction(QIcon("report.ico"), "Generate Report", self))
-        tb.addAction(QAction(QIcon("complaint.png"), "Complaint", self))
-        tb.addAction(QAction(QIcon("exit.png"), "Log Out", self))
-        tb.actionTriggered[QAction].connect(self.tool_btn)
-
-    def tool_btn(self, x):
-        if x.text() == "Refresh Pending Log":
-            self.refresh_table()
-        elif x.text() == "Add User":
-            self.open_add_user()
-        elif x.text() == "Add Location":
-            self.open_add_location()
-        elif x.text() == "Add Hardware":
-            self.open_add_hardware()
-        elif x.text() == "Add Brand":
-            self.open_add_brand()
-        elif x.text() == "Add Problem":
-            self.open_add_pbt()
-        elif x.text() == "Generate Report":
-            self.gen_rep()
-        elif x.text() == "Complaint":
-            self.show_complaint()
-        elif x.text() == "Log Out":
-            self.log_out()
-        else:
-            return
         
     def table_click(self, item):
         global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
@@ -99,27 +64,26 @@ class window(QtWidgets.QMainWindow):
         
     def connections(self):
         self.log_table.doubleClicked.connect(self.table_click)
-        self.manual.triggered.connect(self.show_manual)
-        self.report.triggered.connect(self.gen_rep)
-        self.full_log.triggered.connect(self.show_full_log)
-        self.com_log.triggered.connect(self.show_com_log)
-        self.add_user.triggered.connect(self.open_add_user)
-        self.edit_user.triggered.connect(self.open_edit_user)
-        self.rst_pass.triggered.connect(self.open_reset)
-        self.actionLog_Out.triggered.connect(self.log_out)
-        self.close_window.triggered.connect(self.close)
-        self.add_location.triggered.connect(self.open_add_location)
-        self.edit_location.triggered.connect(self.open_edit_location)
-        self.add_hardware.triggered.connect(self.open_add_hardware)
-        self.edit_hardware.triggered.connect(self.open_edit_hardware)
-        self.add_brand.triggered.connect(self.open_add_brand)
-        self.edit_brand.triggered.connect(self.open_edit_brand)
-        self.add_pbt.triggered.connect(self.open_add_pbt)
-        self.edit_pbt.triggered.connect(self.open_edit_pbt)
-        self.refresh.triggered.connect(self.refresh_table)
-        self.cmplnt.triggered.connect(self.show_complaint)
-        self.about.triggered.connect(self.show_about)
-        self.lic.triggered.connect(self.show_license)
+        self.manual.clicked.connect(self.show_manual)
+        self.report.clicked.connect(self.gen_rep)
+        self.full_log.clicked.connect(self.show_full_log)
+        self.com_log.clicked.connect(self.show_com_log)
+        self.add_user.clicked.connect(self.open_add_user)
+        self.edit_user.clicked.connect(self.open_edit_user)
+        self.rst_pass.clicked.connect(self.open_reset)
+        self.actionLog_Out.clicked.connect(self.log_out)
+        self.add_location.clicked.connect(self.open_add_location)
+        self.edit_location.clicked.connect(self.open_edit_location)
+        self.add_hardware.clicked.connect(self.open_add_hardware)
+        self.edit_hardware.clicked.connect(self.open_edit_hardware)
+        self.add_brand.clicked.connect(self.open_add_brand)
+        self.edit_brand.clicked.connect(self.open_edit_brand)
+        self.add_pbt.clicked.connect(self.open_add_pbt)
+        self.edit_pbt.clicked.connect(self.open_edit_pbt)
+        self.refresh.clicked.connect(self.refresh_table)
+        self.cmplnt.clicked.connect(self.show_complaint)
+        self.about.clicked.connect(self.show_about)
+        self.lic.clicked.connect(self.show_license)
         self.problems = []
         self.hardwares = []
         self.locations = []
@@ -151,12 +115,21 @@ class window(QtWidgets.QMainWindow):
         self.w.show()
         
     def show_license(self):
-        self.w = lic.lic()
-        self.w.show()
+        text = "\t\tHardware Service Manager\n\
+        Copyright (C) 2022  Rahul Mac\n\n\
+        This program is free software: you can redistribute it and/or modify\n\
+        it under the terms of the GNU General Public License as published by\n\
+        the Free Software Foundation, either version 3 of the License, or\n\
+        (at your option) any later version.\n\n\
+        This program is distributed in the hope that it will be useful,\n\
+        but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+        GNU General Public License for more details."
+        QMessageBox().about(self, "License", text)
 
     def show_about(self):
-        self.w = about.about()
-        self.w.show()
+        text = "Hardware Service Manager v2\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
+        QMessageBox().about(self, "About HSM", text)
 
     def open_add_pbt(self):
         self.w = add_pbt.add_pbt()
@@ -203,7 +176,8 @@ class window(QtWidgets.QMainWindow):
         screenRect = desktop.screenGeometry()
         height = screenRect.height()
         width = screenRect.width()
-        self.log_table.setGeometry(0, 0, width, height)
+        self.ribbon.setGeometry(0, 0, width, 121)
+        self.log_table.setGeometry(0, 130, width, height-200)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
         self.showMaximized()
 
@@ -277,3 +251,8 @@ class window(QtWidgets.QMainWindow):
         self.w = login.login()
         self.w.show()
         self.close()
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = window()
+    app.exec_()

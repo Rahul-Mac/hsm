@@ -45,6 +45,11 @@
    </column>
    <column>
     <property name="text">
+     <string>Hardware</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>Problem Description</string>
     </property>
    </column>

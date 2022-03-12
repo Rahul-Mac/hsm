@@ -79,6 +79,8 @@ class edit_user(QtWidgets.QDialog):
         global_variable.mycursor.execute("SELECT UserId, IsActive, UserType, EmployeeCode, UserName from user;")
         data = global_variable.mycursor.fetchall()
         self.log.setRowCount(0)
+        if len(data) == 0:
+            return
         try:
             row = len(data)
             col = len(data[0])

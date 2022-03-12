@@ -32,13 +32,18 @@ class edit_pbt(QtWidgets.QDialog):
         self.show()
 
     def table_click(self, item):
-        global_variable.PBT = self.log.item(self.log.currentRow(), 1).text()
+        global_variable.PBT = self.log.item(self.log.currentRow(), 2).text()
         self.pop = edit_pbt_box.edit_pbt_box()
         self.pop.show()
         self.close()
 
+    def get_hardware(self, i):
+        global_variable.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
+        x = global_variable.mycursor.fetchone()
+        return(str(x[0]))
+
     def fetch(self, text):
-        global_variable.mycursor.execute("SELECT IsActive, ProblemDescription from problemtype where ProblemDescription like '%"+text+"%';")
+        global_variable.mycursor.execute("SELECT IsActive, HardwareId, ProblemDescription from problemtype where ProblemDescription like '%"+text+"%';")
         data = global_variable.mycursor.fetchall()
         self.log.setRowCount(0)
         if len(data) == 0:
@@ -51,7 +56,7 @@ class edit_pbt(QtWidgets.QDialog):
             self.log.setColumnCount(col)
             header = self.log.horizontalHeader()       
             header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
             for r in range(row):
                 for c in range(col):
                     d = str(data[r][c])
@@ -60,11 +65,13 @@ class edit_pbt(QtWidgets.QDialog):
                             d = "Yes"
                         else:
                             d = "No"
+                    elif c == 1:
+                        d = self.get_hardware(d)
                     i = QTableWidgetItem(d)
                     i.setFlags(QtCore.Qt.ItemIsEnabled)
                     self.log.setItem(r, c, i)
-        except:
-            QMessageBox.critical(self, "Error", "An error occured while populating data")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
 
     def get_search(self):
         if self.search.text() == "":
@@ -73,9 +80,11 @@ class edit_pbt(QtWidgets.QDialog):
             self.fetch(self.search.text())
 
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, ProblemDescription from problemtype;")
+        global_variable.mycursor.execute("SELECT IsActive, HardwareId, ProblemDescription from problemtype;")
         data = global_variable.mycursor.fetchall()
         self.log.setRowCount(0)
+        if len(data) == 0:
+            return 
         try:
             row = len(data)
             col = len(data[0])
@@ -84,7 +93,7 @@ class edit_pbt(QtWidgets.QDialog):
             self.log.setColumnCount(col)
             header = self.log.horizontalHeader()       
             header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
             for r in range(row):
                 for c in range(col):
                     d = str(data[r][c])
@@ -93,9 +102,11 @@ class edit_pbt(QtWidgets.QDialog):
                             d = "Yes"
                         else:
                             d = "No"
+                    elif c == 1:
+                        d = self.get_hardware(d)
                     i = QTableWidgetItem(d)
                     i.setFlags(QtCore.Qt.ItemIsEnabled)
                     self.log.setItem(r, c, i)
-        except:
-            QMessageBox.critical(self, "Error", "An error occured while populating data")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
 

@@ -25,35 +25,49 @@ class add_pbt(QtWidgets.QDialog):
         uic.loadUi('add_pbt.ui', self)
         self.setWindowTitle("Hardware Service Manager - Add Problem")
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
+        self.hwt_combo.model().item(0).setEnabled(False)
         self.pbt_reset_btn.clicked.connect(self.reset)
         self.pbt_save_btn.clicked.connect(self.save)
+        self.get_hardware_types()
         self.show()
+
+    def get_hardware_types(self):
+        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = global_variable.mycursor.fetchall()
+        for hardware in self.hardwares:
+            self.hwt_combo.addItem(hardware[1])
 
     def reset(self):
         self.pbt_entry.clear()
+        self.hwt_combo.setCurrentText("-- Select --")
         self.pbt_active.setChecked(True)
 
     def save(self):
         p = self.pbt_entry.text()
         d = str(datetime.datetime.now())
         u = global_variable.USER_ID
+        h = self.hwt_combo.currentText()
+        for hardware in self.hardwares:
+            if h == hardware[1]:
+                h = hardware[0]
+                
         if self.pbt_active.isChecked():
             a = '1'
         else:
             a = '0'
         try:
-            if p == "" or d == "" or u == "" or a == "":
-                raise Exception()
+            if p == "" or d == "" or u == "" or a == "" or h == "-- Select --" or h == "":
+                QMessageBox.critical(self, "Error", "Please fill the compulsory fields")
             else:
                 global_variable.mycursor.execute("SELECT ProblemId FROM problemtype WHERE ProblemDescription = '"+p+"'")
                 x = global_variable.mycursor.fetchone()
                 if x is None:
-                    sql = "INSERT INTO problemtype (ProblemDescription, CreatedDateTime, CreatedUserId, UpdatedDateTime, UpdatedUserId, IsActive) VALUES ('"+p+"', '"+d+"', '"+u+"', '"+d+"', '"+u+"', '"+a+"')"
+                    sql = "INSERT INTO problemtype (ProblemDescription, CreatedDateTime, CreatedUserId, UpdatedDateTime, UpdatedUserId, IsActive, HardwareId) VALUES ('"+p+"', '"+d+"', '"+u+"', '"+d+"', '"+u+"', '"+a+"', '"+str(h)+"')"
                     global_variable.mycursor.execute(sql)
                     global_variable.mydb.commit()
                     QMessageBox.information(self, "Message", "Data registered successfully!")
                     self.reset()
                 else:
                     QMessageBox.critical(self, "Error", "Problem description already exists")
-        except:
-            QMessageBox.critical(self, "Error", "Data registration failed")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))

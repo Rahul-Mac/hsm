@@ -76,6 +76,8 @@ class edit_brand(QtWidgets.QDialog):
         global_variable.mycursor.execute("SELECT IsActive, BrandName from brand;")
         data = global_variable.mycursor.fetchall()
         self.log.setRowCount(0)
+        if len(data) == 0:
+            return
         try:
             row = len(data)
             col = len(data[0])

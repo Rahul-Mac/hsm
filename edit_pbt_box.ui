@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>390</width>
-    <height>141</height>
+    <height>168</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <x>10</x>
      <y>20</y>
      <width>371</width>
-     <height>111</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="title">
@@ -34,25 +34,27 @@
       <x>9</x>
       <y>30</y>
       <width>351</width>
-      <height>89</height>
+      <height>131</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
-     <item row="3" column="0" colspan="2">
-      <widget class="QPushButton" name="pbt_update_btn">
-       <property name="text">
-        <string>Update</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QPushButton" name="pbt_reset_btn">
-       <property name="text">
-        <string>Reset</string>
-       </property>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="hwt_combo">
+       <item>
+        <property name="text">
+         <string>-- Select --</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Hardware</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
       <widget class="QCheckBox" name="pbt_active">
        <property name="font">
         <font>
@@ -64,6 +66,20 @@
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
+      <widget class="QPushButton" name="pbt_update_btn">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QPushButton" name="pbt_reset_btn">
+       <property name="text">
+        <string>Reset</string>
        </property>
       </widget>
      </item>

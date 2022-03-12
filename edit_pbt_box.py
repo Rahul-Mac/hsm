@@ -26,19 +26,33 @@ class edit_pbt_box(QtWidgets.QDialog):
         uic.loadUi('edit_pbt_box.ui', self)
         self.setWindowTitle("Hardware Service Manager - Problem Edit")
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
+        self.hwt_combo.model().item(0).setEnabled(False)
         self.pbt_update_btn.clicked.connect(self.update)
         self.pbt_reset_btn.clicked.connect(self.reset)
         self.pbt_box.setTitle(global_variable.PBT)
+        self.get_hardware_types()
         self.generate()
         self.show()
 
+    def get_hardware(self, i):
+        global_variable.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
+        x = global_variable.mycursor.fetchone()
+        return(str(x[0]))
+
+    def get_hardware_types(self):
+        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = global_variable.mycursor.fetchall()
+        for hardware in self.hardwares:
+            self.hwt_combo.addItem(hardware[1])
+            
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive from problemtype where ProblemDescription = '"+global_variable.PBT+"'")
+        global_variable.mycursor.execute("SELECT IsActive, HardwareId from problemtype where ProblemDescription = '"+global_variable.PBT+"'")
         data = global_variable.mycursor.fetchone()
         if data[0]:
             self.pbt_active.setChecked(True)
         else:
             self.pbt_active.setChecked(False)
+        self.hwt_combo.setCurrentText(self.get_hardware(data[1]))
     
     def update(self):
         p = global_variable.PBT
@@ -48,17 +62,21 @@ class edit_pbt_box(QtWidgets.QDialog):
             a = '0'
         d = str(datetime.datetime.now())
         u = global_variable.USER_ID
+        h = self.hwt_combo.currentText()
+        for hardware in self.hardwares:
+            if h == hardware[1]:
+                h = hardware[0]
         try:
             if p == "" or d == "" or u == "" or  a == "": 
                 raise Exception()
             else:
-                sql = "UPDATE problemtype set IsActive = '"+a+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+u+"' Where  ProblemDescription = '"+p+"'"
+                sql = "UPDATE problemtype set HardwareID = '"+str(h)+"', IsActive = '"+a+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+u+"' Where  ProblemDescription = '"+p+"'"
                 global_variable.mycursor.execute(sql)
                 global_variable.mydb.commit()
                 QMessageBox.information(self, "Message", "Data updated successfully!")
                 self.close()                      
-        except:
-            QMessageBox.critical(self, "Error", "An error has occured while updating data. \nTry again.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
 
     def reset(self):
         self.pbt_active.setChecked(True)

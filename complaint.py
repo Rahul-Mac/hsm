@@ -34,12 +34,24 @@ class complaint(QtWidgets.QDialog):
         self.generate_ticket()
         self.get_admins()
         self.get_hardware_types()
-        self.get_problem_types()
+        self.problems = []
         self.get_location_types()
+        self.hwt_combo.currentTextChanged.connect(self.on_hwt_chg)
         self.reset_details.clicked.connect(self.reset)
         self.save_details.clicked.connect(self.save)
         self.show()
 
+    def on_hwt_chg(self, h):
+        flg = 0
+        for hardware in self.hardwares:
+            if h == hardware[1]:
+                h = hardware[0]
+                flg = 1
+        if flg == 0:
+            self.pbt_combo.setCurrentText("-- Select --")
+        else:
+            self.get_problem_types(h)
+        
     def save(self):
         t = self.ticket.text()
         h = self.hwt_combo.currentText()
@@ -95,8 +107,12 @@ class complaint(QtWidgets.QDialog):
         for loc in self.locations:
             self.loc_combo.addItem(loc[1])
 
-    def get_problem_types(self):
-        global_variable.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1;")
+    def get_problem_types(self, h):
+        self.problems.clear()
+        self.pbt_combo.clear()
+        self.pbt_combo.addItem("-- Select --")
+        self.pbt_combo.model().item(0).setEnabled(False)
+        global_variable.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1 and HardwareId = "+str(h)+";")
         self.problems = global_variable.mycursor.fetchall()
         for problem in self.problems:
             self.pbt_combo.addItem(problem[1])

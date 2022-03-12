@@ -78,6 +78,8 @@ class edit_loc(QtWidgets.QDialog):
         global_variable.mycursor.execute("SELECT IsActive, Floor, Wing, LocationName from location;")
         data = global_variable.mycursor.fetchall()
         self.log.setRowCount(0)
+        if len(data) == 0:
+            return
         try:
             row = len(data)
             col = len(data[0])
