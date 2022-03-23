@@ -21,6 +21,8 @@ import sys
 
 class com_log(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(com_log, self).__init__()
         uic.loadUi('com_log.ui', self)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
@@ -29,23 +31,37 @@ class com_log(QtWidgets.QDialog):
         self.generate()
         self.show()
 
+    def open_db(self):
+        com_log.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        com_log.mycursor = com_log.mydb.cursor()
+
+    def close_db(self):
+        com_log.mycursor.close()
+        com_log.mydb.close()
+
     def get_problem_name(self, index):
-        global_variable.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1;")
-        self.problems = global_variable.mycursor.fetchall()
+        self.open_db()
+        com_log.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1;")
+        self.problems = com_log.mycursor.fetchall()
+        self.close_db()
         for p in self.problems:
             if index == p[0]:
                 return str(p[1])
     
     def get_hardware_name(self, index):
-        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
-        self.hardwares = global_variable.mycursor.fetchall()
+        self.open_db()
+        com_log.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = com_log.mycursor.fetchall()
+        self.close_db()
         for h in self.hardwares:
             if index == h[0]:
                 return str(h[1])
     
     def get_location_name(self, index):
-        global_variable.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
-        self.locations = global_variable.mycursor.fetchall()
+        self.open_db()
+        com_log.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
+        self.locations = com_log.mycursor.fetchall()
+        self.close_db()
         for loc in self.locations:
             if index == loc[0]:
                 return str(loc[1])
@@ -57,8 +73,10 @@ class com_log(QtWidgets.QDialog):
             self.fetch(self.search.text())
 
     def fetch(self, text):
-        global_variable.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 0 AND TicketId like '%"+text+"%';")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        com_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 0 AND TicketId like '%"+text+"%';")
+        data = com_log.mycursor.fetchall()
+        self.close_db()
         self.log_table.setRowCount(0)
         if len(data) == 0:
             return 
@@ -104,8 +122,10 @@ class com_log(QtWidgets.QDialog):
 
 
     def generate(self):
-        global_variable.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 0;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        com_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 0;")
+        data = com_log.mycursor.fetchall()
+        self.close_db()
         self.log_table.setRowCount(0)
         self.log_table.setRowCount(0)
         if len(data) == 0:

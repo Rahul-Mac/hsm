@@ -21,6 +21,8 @@ import sys
 
 class add_hwt(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(add_hwt, self).__init__()
         uic.loadUi('add_hwt.ui', self)
         self.setWindowTitle("Hardware Service Manager - Add Hardware")
@@ -28,6 +30,14 @@ class add_hwt(QtWidgets.QDialog):
         self.hwt_reset_btn.clicked.connect(self.reset)
         self.hwt_save_btn.clicked.connect(self.save)
         self.show()
+
+    def open_db(self):
+        add_hwt.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_hwt.mycursor = add_hwt.mydb.cursor()
+
+    def close_db(self):
+        add_hwt.mycursor.close()
+        add_hwt.mydb.close()
 
     def reset(self):
         self.hwt_entry.clear()
@@ -45,12 +55,16 @@ class add_hwt(QtWidgets.QDialog):
             if h == "" or d == "" or u == "" or a == "":
                 raise Exception()
             else:
-                global_variable.mycursor.execute("SELECT HardwareId FROM hardwaretype WHERE HardwareName = '"+h+"'")
-                x = global_variable.mycursor.fetchone()
+                self.open_db()
+                add_hwt.mycursor.execute("SELECT HardwareId FROM hardwaretype WHERE HardwareName = '"+h+"'")
+                x = add_hwt.mycursor.fetchone()
+                self.close_db()
                 if x is None:
                     sql = "INSERT INTO hardwaretype (HardwareName, CreatedDateTime, CreatedUserId, UpdatedDateTime, UpdatedUserId, IsActive) VALUES ('"+h+"', '"+d+"', '"+u+"', '"+d+"', '"+u+"', '"+a+"')"
-                    global_variable.mycursor.execute(sql)
-                    global_variable.mydb.commit()
+                    self.open_db()
+                    add_hwt.mycursor.execute(sql)
+                    add_hwt.mydb.commit()
+                    self.close_db()
                     QMessageBox.information(self, "Message", "Data registered successfully!")
                     self.reset()
                 else:

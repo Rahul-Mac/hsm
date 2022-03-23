@@ -21,6 +21,8 @@ import sys
 
 class add_user(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(add_user, self).__init__()
         uic.loadUi('add_user.ui', self)
         self.setWindowTitle("Hardware Service Manager - Add User")
@@ -29,6 +31,14 @@ class add_user(QtWidgets.QDialog):
         self.user_reset_btn.clicked.connect(self.reset)
         self.user_combo.model().item(0).setEnabled(False)
         self.show()
+
+    def open_db(self):
+        add_user.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_user.mycursor = add_user.mydb.cursor()
+
+    def close_db(self):
+        add_user.mycursor.close()
+        add_user.mydb.close()
 
     def save(self):
         i = self.user_id.text()
@@ -47,16 +57,22 @@ class add_user(QtWidgets.QDialog):
             elif len(p) < 6:
                 QMessageBox.critical(self, "Error", "Password must be 6 characters long")
             else:
-                global_variable.mycursor.execute("SELECT UserIndex FROM user WHERE UserId = '"+i+"'")
-                x = global_variable.mycursor.fetchone()
-                global_variable.mycursor.execute("SELECT UserIndex FROM user WHERE EmployeeCode = '"+e+"'")
-                y = global_variable.mycursor.fetchone()
+                self.open_db()
+                add_user.mycursor.execute("SELECT UserIndex FROM user WHERE UserId = '"+i+"'")
+                x = add_user.mycursor.fetchone()
+                self.close_db()
+                self.open_db()
+                add_user.mycursor.execute("SELECT UserIndex FROM user WHERE EmployeeCode = '"+e+"'")
+                y = add_user.mycursor.fetchone()
+                self.close_db()
                 p = hashlib.md5(p.encode('utf-8')).hexdigest()
                 if x is None and y is None:
                     sql = "INSERT INTO user (UserId, UserName, UserType, CreatedDateTime, EmployeeCode, UserPassword, CreatedUserId, UpdatedUserId, UpdatedDateTime, IsActive) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"    
                     val = (i, u, t, d, e, p, global_variable.USER_ID, global_variable.USER_ID, d, a)
-                    global_variable.mycursor.execute(sql, val)
-                    global_variable.mydb.commit()
+                    self.open_db()
+                    add_user.mycursor.execute(sql, val)
+                    add_user.mydb.commit()
+                    self.close_db()
                     QMessageBox.information(self, "Message", "Data registered successfully")
                     self.reset()
                 else:

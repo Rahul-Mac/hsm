@@ -12,10 +12,7 @@ If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QMessageBox, QApplication, QCompleter
-import mysql.connector
-import global_variable
-import sys
+from PyQt5.QtWidgets import QApplication
 
 class manual(QtWidgets.QDialog):
     def __init__(self):

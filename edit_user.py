@@ -22,6 +22,8 @@ import edit_user_box
 
 class edit_user(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_user, self).__init__()
         uic.loadUi('edit_user.ui', self)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
@@ -31,6 +33,14 @@ class edit_user(QtWidgets.QDialog):
         self.search.textChanged.connect(self.get_search)
         self.show()
 
+    def open_db(self):
+        edit_user.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_user.mycursor = edit_user.mydb.cursor()
+
+    def close_db(self):
+        edit_user.mycursor.close()
+        edit_user.mydb.close()
+
     def table_click(self, item):
         global_variable.UID = self.log.item(self.log.currentRow(), 0).text()
         self.pop = edit_user_box.edit_user_box()
@@ -38,8 +48,10 @@ class edit_user(QtWidgets.QDialog):
         self.close()
 
     def fetch(self, text):
-        global_variable.mycursor.execute("SELECT UserId, IsActive, UserType, EmployeeCode, UserName from user where UserId like '%"+text+"%';")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_user.mycursor.execute("SELECT UserId, IsActive, UserType, EmployeeCode, UserName from user where UserId like '%"+text+"%';")
+        data = edit_user.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return 
@@ -76,8 +88,10 @@ class edit_user(QtWidgets.QDialog):
             self.fetch(self.search.text())
 
     def generate(self):
-        global_variable.mycursor.execute("SELECT UserId, IsActive, UserType, EmployeeCode, UserName from user;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_user.mycursor.execute("SELECT UserId, IsActive, UserType, EmployeeCode, UserName from user;")
+        data = edit_user.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return

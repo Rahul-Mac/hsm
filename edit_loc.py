@@ -22,6 +22,8 @@ import edit_loc_box
 
 class edit_loc(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_loc, self).__init__()
         uic.loadUi('edit_loc.ui', self)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
@@ -31,6 +33,14 @@ class edit_loc(QtWidgets.QDialog):
         self.search.textChanged.connect(self.get_search)
         self.show()
 
+    def open_db(self):
+        edit_loc.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_loc.mycursor = edit_loc.mydb.cursor()
+
+    def close_db(self):
+        edit_loc.mycursor.close()
+        edit_loc.mydb.close()
+
     def table_click(self, item):
         global_variable.LOC = self.log.item(self.log.currentRow(), 3).text()
         self.pop = edit_loc_box.edit_loc_box()
@@ -38,8 +48,10 @@ class edit_loc(QtWidgets.QDialog):
         self.close()
 
     def fetch(self, text):
-        global_variable.mycursor.execute("SELECT IsActive, Floor, Wing, LocationName from location where LocationName like '%"+text+"%';")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_loc.mycursor.execute("SELECT IsActive, Floor, Wing, LocationName from location where LocationName like '%"+text+"%';")
+        data = edit_loc.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return 
@@ -75,8 +87,10 @@ class edit_loc(QtWidgets.QDialog):
             self.fetch(self.search.text())
 
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, Floor, Wing, LocationName from location;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_loc.mycursor.execute("SELECT IsActive, Floor, Wing, LocationName from location;")
+        data = edit_loc.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return

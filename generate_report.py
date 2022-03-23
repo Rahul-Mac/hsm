@@ -24,6 +24,8 @@ import pandas as pd
 
 class generate_report(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(generate_report, self).__init__()
         self.date = date.today()
         self.time = datetime.now()
@@ -36,6 +38,14 @@ class generate_report(QtWidgets.QDialog):
         self.start.setDateTime(QDateTime(self.date.year, self.date.month, self.date.day, 0, 0, 0))
         self.end.setDateTime(QDateTime(self.date.year, self.date.month, self.date.day, 23, 59, 59))
         self.show()
+
+    def open_db(self):
+        generate_report.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        generate_report.mycursor = generate_report.mydb.cursor()
+
+    def close_db(self):
+        generate_report.mycursor.close()
+        generate_report.mydb.close()
 
     def list_to_excel(self, n):
         fields = ['Ticket ID', 'Complainer', 'Assigned To', 'Location', 'Is It Pending?', 'Date & Time', 'System Name']
@@ -50,8 +60,10 @@ class generate_report(QtWidgets.QDialog):
 
     def get_location_name(self, index, i):
         try:
-            global_variable.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
-            locations = global_variable.mycursor.fetchall()
+            self.open_db()
+            generate_report.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
+            locations = generate_report.mycursor.fetchall()
+            self.close_db()
             for loc in locations:
                 if index == loc[0]:
                     self.data[i][3] = loc[1]
@@ -75,8 +87,10 @@ class generate_report(QtWidgets.QDialog):
                 raise Exception()
             else:
                 sql = "SELECT TicketId, CreatedUserId, AdminId, LocationId, IsActive, CreatedDateTime, SystemName FROM transaction WHERE CreatedDateTime BETWEEN '"+str(s)+"' AND '"+str(e)+"'"
-                global_variable.mycursor.execute(sql)
-                self.data = global_variable.mycursor.fetchall()
+                self.open_db()
+                generate_report.mycursor.execute(sql)
+                self.data = generate_report.mycursor.fetchall()
+                self.close_db()
                 self.convert()
                 self.list_to_excel(f+"/"+n+".xlsx")
                 self.close()

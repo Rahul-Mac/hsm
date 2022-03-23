@@ -21,6 +21,8 @@ import sys
 
 class add_brand(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(add_brand, self).__init__()
         uic.loadUi('add_brand.ui', self)
         self.setWindowTitle("Hardware Service Manager - Add Brand")
@@ -28,6 +30,14 @@ class add_brand(QtWidgets.QDialog):
         self.brd_reset_btn.clicked.connect(self.reset)
         self.brd_save_btn.clicked.connect(self.save)
         self.show()
+
+    def open_db(self):
+        add_brand.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_brand.mycursor = add_brand.mydb.cursor()
+
+    def close_db(self):
+        add_brand.mycursor.close()
+        add_brand.mydb.close()
 
     def reset(self):
         self.brd_entry.clear()
@@ -45,13 +55,17 @@ class add_brand(QtWidgets.QDialog):
             if u == "" or b == "" or d == "":
                 raise Exception()
             else:
-                global_variable.mycursor.execute("SELECT BrandId FROM brand WHERE BrandName = '"+b+"'")
-                x = global_variable.mycursor.fetchone()
+                self.open_db()
+                add_brand.mycursor.execute("SELECT BrandId FROM brand WHERE BrandName = '"+b+"'")
+                x = add_brand.mycursor.fetchone()
+                self.close_db()
                 if x is None:
                     sql = "INSERT INTO brand (BrandName, IsActive, CreatedDateTime, CreatedUserId, UpdatedUserId, UpdatedDateTime) VALUES (%s, %s, %s, %s, %s, %s)"
                     val = (b, a, d, u, u, d)
-                    global_variable.mycursor.execute(sql, val)
-                    global_variable.mydb.commit()
+                    self.open_db()
+                    add_brand.mycursor.execute(sql, val)
+                    add_brand.mydb.commit()
+                    self.close_db()
                     QMessageBox.information(self, "Message", "Data registered successfully!")
                     self.reset()
 

@@ -22,6 +22,8 @@ import edit_hwt_box
 
 class edit_hwt(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_hwt, self).__init__()
         uic.loadUi('edit_hwt.ui', self)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
@@ -31,6 +33,14 @@ class edit_hwt(QtWidgets.QDialog):
         self.search.textChanged.connect(self.get_search)
         self.show()
 
+    def open_db(self):
+        edit_hwt.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_hwt.mycursor = edit_hwt.mydb.cursor()
+
+    def close_db(self):
+        edit_hwt.mycursor.close()
+        edit_hwt.mydb.close()
+
     def table_click(self, item):
         global_variable.HWT = self.log.item(self.log.currentRow(), 1).text()
         self.pop = edit_hwt_box.edit_hwt_box()
@@ -38,8 +48,10 @@ class edit_hwt(QtWidgets.QDialog):
         self.close()
 
     def fetch(self, text):
-        global_variable.mycursor.execute("SELECT IsActive, HardwareName from hardwaretype where HardwareName like '%"+text+"%';")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_hwt.mycursor.execute("SELECT IsActive, HardwareName from hardwaretype where HardwareName like '%"+text+"%';")
+        data = edit_hwt.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return 
@@ -73,8 +85,10 @@ class edit_hwt(QtWidgets.QDialog):
             self.fetch(self.search.text())
 
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, HardwareName from hardwaretype;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_hwt.mycursor.execute("SELECT IsActive, HardwareName from hardwaretype;")
+        data = edit_hwt.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return 

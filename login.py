@@ -36,10 +36,14 @@ class login(QtWidgets.QDialog):
         p = hashlib.md5(p.encode('utf-8')).hexdigest()
         try:
             if u == "" or p == "":
-                raise Exception()
+                QMessageBox().critical(self, "Error", "Empty fields are not allowed")
             else:
-                global_variable.mycursor.execute("SELECT UserType FROM user WHERE UserId = '"+u+"' AND UserPassword = '"+p+"' AND IsActive = 1;")
-                global_variable.USER_TYPE = global_variable.mycursor.fetchone()[0]
+                mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+                mycursor = mydb.cursor()
+                mycursor.execute("SELECT UserType FROM user WHERE UserId = '"+u+"' AND UserPassword = '"+p+"' AND IsActive = 1;")
+                global_variable.USER_TYPE = mycursor.fetchone()[0]
+                mycursor.close()
+                mydb.close()
                 global_variable.USER_ID = u
                 if(global_variable.USER_TYPE):
                     msg = QMessageBox()
@@ -51,9 +55,9 @@ class login(QtWidgets.QDialog):
                     msg.setWindowIcon(QtGui.QIcon('icon.ico'))
                     retval = msg.exec_()
                 else:
-                    raise Exception()
-        except:
-            QMessageBox().critical(self, "Error", "Login Failed! Try Again")
+                    QMessageBox().critical(self, "Error", "UserID and/or Password is incorrect")
+        except Exception as e:
+            QMessageBox().critical(self, "Error", str(e))
 
     def msgbtn(self, x):
         if x.text:

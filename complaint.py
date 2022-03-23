@@ -22,6 +22,8 @@ from datetime import timedelta
 
 class complaint(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(complaint, self).__init__()
         uic.loadUi('complaint.ui', self)
         self.setWindowTitle("Hardware Service Manager - Complaint - "+global_variable.USER_ID+" ("+global_variable.USER_TYPE+")")
@@ -40,6 +42,14 @@ class complaint(QtWidgets.QDialog):
         self.reset_details.clicked.connect(self.reset)
         self.save_details.clicked.connect(self.save)
         self.show()
+
+    def open_db(self):
+        complaint.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        complaint.mycursor = complaint.mydb.cursor()
+
+    def close_db(self):
+        complaint.mycursor.close()
+        complaint.mydb.close()
 
     def on_hwt_chg(self, h):
         flg = 0
@@ -84,8 +94,10 @@ class complaint(QtWidgets.QDialog):
                     r = "NULL"
                 sql = "INSERT INTO transaction (TicketId, ProblemId, HardwareId, CreatedUserId, CreatedDateTime, Remark, SystemName, LocationId, Name, AdminId) VALUES \
                 ('"+t+"', "+str(p)+", "+str(h)+", '"+u+"', '"+d+"','"+r+"', '"+str(b)+"', '"+str(l)+"', '"+n+"', '"+str(a)+"')"
-                global_variable.mycursor.execute(sql)
-                global_variable.mydb.commit()
+                self.open_db()
+                complaint.mycursor.execute(sql)
+                complaint.mydb.commit()
+                self.close_db()
                 QMessageBox.information(self, "Message", "Data registered successfully!")
                 self.reset()
                 self.generate_ticket()
@@ -102,8 +114,10 @@ class complaint(QtWidgets.QDialog):
         self.remark.setPlainText("")
 
     def get_location_types(self):
-        global_variable.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
-        self.locations = global_variable.mycursor.fetchall()
+        self.open_db()
+        complaint.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
+        self.locations = complaint.mycursor.fetchall()
+        self.close_db()
         for loc in self.locations:
             self.loc_combo.addItem(loc[1])
 
@@ -112,20 +126,26 @@ class complaint(QtWidgets.QDialog):
         self.pbt_combo.clear()
         self.pbt_combo.addItem("-- Select --")
         self.pbt_combo.model().item(0).setEnabled(False)
-        global_variable.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1 and HardwareId = "+str(h)+";")
-        self.problems = global_variable.mycursor.fetchall()
+        self.open_db()
+        complaint.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1 and HardwareId = "+str(h)+";")
+        self.problems = complaint.mycursor.fetchall()
+        self.close_db()
         for problem in self.problems:
             self.pbt_combo.addItem(problem[1])
 
     def get_hardware_types(self):
-        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
-        self.hardwares = global_variable.mycursor.fetchall()
+        self.open_db()
+        complaint.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = complaint.mycursor.fetchall()
+        self.close_db()
         for hardware in self.hardwares:
             self.hwt_combo.addItem(hardware[1])
 
     def get_admins(self):
-        global_variable.mycursor.execute("SELECT UserId FROM user where IsActive = 1 and UserType = 'Admin';")
-        self.admin = global_variable.mycursor.fetchall()
+        self.open_db()
+        complaint.mycursor.execute("SELECT UserId FROM user where IsActive = 1 and UserType = 'Admin';")
+        self.admin = complaint.mycursor.fetchall()
+        self.close_db()
         for admin in self.admin:
             self.ad_combo.addItem(admin[0])
 
@@ -133,8 +153,10 @@ class complaint(QtWidgets.QDialog):
         yesterday = (date.today() - timedelta(days = 1)).year
         today = date.today().year            
         try:
-            global_variable.mycursor.execute("SELECT count(ComplaintId) FROM transaction;")
-            x = global_variable.mycursor.fetchall()
+            self.open_db()
+            complaint.mycursor.execute("SELECT count(ComplaintId) FROM transaction;")
+            x = complaint.mycursor.fetchall()
+            self.close_db()
             cnt = x[0][0]
             if cnt == 0 or yesterday == today:
                 self.ticket.setText("IT-"+str(today)+"-"+str(cnt))

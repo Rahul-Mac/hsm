@@ -22,6 +22,8 @@ import edit_loc
 
 class edit_loc_box(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_loc_box, self).__init__()
         uic.loadUi('edit_loc_box.ui', self)
         self.setWindowTitle("Hardware Service Manager - Location Edit")
@@ -34,9 +36,19 @@ class edit_loc_box(QtWidgets.QDialog):
         self.generate()
         self.show()
 
+    def open_db(self):
+        edit_loc_box.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_loc_box.mycursor = edit_loc_box.mydb.cursor()
+
+    def close_db(self):
+        edit_loc_box.mycursor.close()
+        edit_loc_box.mydb.close()
+
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, Floor, Wing from location where LocationName = '"+global_variable.LOC+"'")
-        data = global_variable.mycursor.fetchone()
+        self.open_db()
+        edit_loc_box.mycursor.execute("SELECT IsActive, Floor, Wing from location where LocationName = '"+global_variable.LOC+"'")
+        data = edit_loc_box.mycursor.fetchone()
+        self.close_db()
         if data[0]:
             self.loc_active.setChecked(True)
         else:
@@ -61,8 +73,10 @@ class edit_loc_box(QtWidgets.QDialog):
                 raise Exception()
             else:
                 sql = "UPDATE location set IsActive = '"+a+"', Floor = '"+f+"', Wing = '"+w+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+u+"' Where LocationName = '"+l+"'"
-                global_variable.mycursor.execute(sql)
-                global_variable.mydb.commit()
+                self.open_db()
+                edit_loc_box.mycursor.execute(sql)
+                edit_loc_box.mydb.commit()
+                self.close_db()
                 QMessageBox.information(self, "Message", "Data updated successfully!")
                 self.close()
                 

@@ -22,6 +22,8 @@ import edit_pbt
 
 class edit_pbt_box(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_pbt_box, self).__init__()
         uic.loadUi('edit_pbt_box.ui', self)
         self.setWindowTitle("Hardware Service Manager - Problem Edit")
@@ -34,20 +36,34 @@ class edit_pbt_box(QtWidgets.QDialog):
         self.generate()
         self.show()
 
+    def open_db(self):
+        edit_pbt_box.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_pbt_box.mycursor = edit_pbt_box.mydb.cursor()
+
+    def close_db(self):
+        edit_pbt_box.mycursor.close()
+        edit_pbt_box.mydb.close()
+
     def get_hardware(self, i):
-        global_variable.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
-        x = global_variable.mycursor.fetchone()
+        self.open_db()
+        edit_pbt_box.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
+        x = edit_pbt_box.mycursor.fetchone()
+        self.close_db()
         return(str(x[0]))
 
     def get_hardware_types(self):
-        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
-        self.hardwares = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_pbt_box.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = edit_pbt_box.mycursor.fetchall()
+        self.close_db()
         for hardware in self.hardwares:
             self.hwt_combo.addItem(hardware[1])
             
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, HardwareId from problemtype where ProblemDescription = '"+global_variable.PBT+"'")
-        data = global_variable.mycursor.fetchone()
+        self.open_db()
+        edit_pbt_box.mycursor.execute("SELECT IsActive, HardwareId from problemtype where ProblemDescription = '"+global_variable.PBT+"'")
+        data = edit_pbt_box.mycursor.fetchone()
+        self.close_db()
         if data[0]:
             self.pbt_active.setChecked(True)
         else:
@@ -71,8 +87,10 @@ class edit_pbt_box(QtWidgets.QDialog):
                 raise Exception()
             else:
                 sql = "UPDATE problemtype set HardwareID = '"+str(h)+"', IsActive = '"+a+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+u+"' Where  ProblemDescription = '"+p+"'"
-                global_variable.mycursor.execute(sql)
-                global_variable.mydb.commit()
+                self.open_db()
+                edit_pbt_box.mycursor.execute(sql)
+                edit_pbt_box.mydb.commit()
+                self.close_db()
                 QMessageBox.information(self, "Message", "Data updated successfully!")
                 self.close()                      
         except Exception as e:

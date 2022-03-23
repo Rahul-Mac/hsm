@@ -42,16 +42,30 @@ import reset_password
 
 class window(QtWidgets.QMainWindow):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(window, self).__init__()
         uic.loadUi('window.ui', self)
         self.setWindowTitle("Hardware Service Manager - Master - "+global_variable.USER_ID+" ("+global_variable.USER_TYPE+")")
         self.measurement()
         self.connections()
-        self.view_table()
+        try:
+            self.view_table()
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
         self.refresh.setText("Refresh\nTable")
         self.com_log.setText("Completed\nTable")
         self.rst_pass.setText("Reset\nPassword")
+        self.report.setText("Export To\nXLSX")
         self.show()
+
+    def open_db(self):
+        window.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        window.mycursor = window.mydb.cursor()
+
+    def close_db(self):
+        window.mycursor.close()
+        window.mydb.close()
         
     def table_click(self, item):
         global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
@@ -128,7 +142,7 @@ class window(QtWidgets.QMainWindow):
         QMessageBox().about(self, "License", text)
 
     def show_about(self):
-        text = "Hardware Service Manager v2\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
+        text = "Hardware Service Manager v0.4\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
         QMessageBox().about(self, "About HSM", text)
 
     def open_add_pbt(self):
@@ -182,29 +196,37 @@ class window(QtWidgets.QMainWindow):
         self.showMaximized()
 
     def get_problem_name(self, index):
-        global_variable.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1;")
-        self.problems = global_variable.mycursor.fetchall()
+        self.open_db()
+        window.mycursor.execute("SELECT ProblemId, ProblemDescription FROM problemtype where IsActive = 1;")
+        self.problems = window.mycursor.fetchall()
+        self.close_db()
         for p in self.problems:
             if index == p[0]:
                 return str(p[1])
     
     def get_hardware_name(self, index):
-        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
-        self.hardwares = global_variable.mycursor.fetchall()
+        self.open_db()
+        window.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = window.mycursor.fetchall()
+        self.close_db()
         for h in self.hardwares:
             if index == h[0]:
                 return str(h[1])
     
     def get_location_name(self, index):
-        global_variable.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
-        self.locations = global_variable.mycursor.fetchall()
+        self.open_db()
+        window.mycursor.execute("SELECT LocationId, LocationName FROM location where IsActive = 1;")
+        self.locations = window.mycursor.fetchall()
+        self.close_db()
         for loc in self.locations:
             if index == loc[0]:
                 return str(loc[1])
 
     def view_table(self):
-        global_variable.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark FROM transaction where IsActive = 1;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        window.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, Solution FROM transaction where IsActive = 1;")
+        data = window.mycursor.fetchall()
+        self.close_db()
         self.log_table.setRowCount(0)
         self.log_table.setRowCount(0)
         if len(data) == 0:
@@ -225,7 +247,8 @@ class window(QtWidgets.QMainWindow):
             header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(7, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(8, QtWidgets.QHeaderView.ResizeToContents)
-            #header.setSectionResizeMode(9, QtWidgets.QHeaderView.Stretch)
+            header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents)
             for r in range(row):
                 for c in range(col):
                     d = data[r][c]

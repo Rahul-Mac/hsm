@@ -22,6 +22,8 @@ import edit_pbt_box
 
 class edit_pbt(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_pbt, self).__init__()
         uic.loadUi('edit_pbt.ui', self)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
@@ -31,6 +33,14 @@ class edit_pbt(QtWidgets.QDialog):
         self.search.textChanged.connect(self.get_search)
         self.show()
 
+    def open_db(self):
+        edit_pbt.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_pbt.mycursor = edit_pbt.mydb.cursor()
+
+    def close_db(self):
+        edit_pbt.mycursor.close()
+        edit_pbt.mydb.close()
+
     def table_click(self, item):
         global_variable.PBT = self.log.item(self.log.currentRow(), 2).text()
         self.pop = edit_pbt_box.edit_pbt_box()
@@ -38,13 +48,17 @@ class edit_pbt(QtWidgets.QDialog):
         self.close()
 
     def get_hardware(self, i):
-        global_variable.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
-        x = global_variable.mycursor.fetchone()
+        self.open_db()
+        edit_pbt.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
+        x = edit_pbt.mycursor.fetchone()
+        self.close_db()
         return(str(x[0]))
 
     def fetch(self, text):
-        global_variable.mycursor.execute("SELECT IsActive, HardwareId, ProblemDescription from problemtype where ProblemDescription like '%"+text+"%';")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_pbt.mycursor.execute("SELECT IsActive, HardwareId, ProblemDescription from problemtype where ProblemDescription like '%"+text+"%';")
+        data = edit_pbt.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return 
@@ -80,8 +94,10 @@ class edit_pbt(QtWidgets.QDialog):
             self.fetch(self.search.text())
 
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, HardwareId, ProblemDescription from problemtype;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        edit_pbt.mycursor.execute("SELECT IsActive, HardwareId, ProblemDescription from problemtype;")
+        data = edit_pbt.mycursor.fetchall()
+        self.close_db()
         self.log.setRowCount(0)
         if len(data) == 0:
             return 

@@ -22,6 +22,8 @@ import edit_brand
 
 class edit_brand_box(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_brand_box, self).__init__()
         uic.loadUi('edit_brand_box.ui', self)
         self.setWindowTitle("Hardware Service Manager - Brand Edit")
@@ -31,9 +33,19 @@ class edit_brand_box(QtWidgets.QDialog):
         self.generate()
         self.show()
 
+    def open_db(self):
+        edit_brand_box.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_brand_box.mycursor = edit_brand_box.mydb.cursor()
+
+    def close_db(self):
+        edit_brand_box.mycursor.close()
+        edit_brand_box.mydb.close()
+
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive, BrandId from brand where BrandName = '"+global_variable.BRD+"'")
-        data = global_variable.mycursor.fetchone()
+        self.open_db()
+        edit_brand_box.mycursor.execute("SELECT IsActive, BrandId from brand where BrandName = '"+global_variable.BRD+"'")
+        data = edit_brand_box.mycursor.fetchone()
+        self.close_db()
         if data[0]:
             self.active.setChecked(True)
         else:
@@ -53,14 +65,20 @@ class edit_brand_box(QtWidgets.QDialog):
             if b == "" or d == "" or u == "" or  a == "": 
                 raise Exception()
             else:
-                global_variable.mycursor.execute("SELECT BrandName FROM brand WHERE BrandId = "+str(self.ids))
-                x = global_variable.mycursor.fetchone()
-                global_variable.mycursor.execute("SELECT BrandId FROM brand WHERE BrandName = '"+b+"'")
-                y = global_variable.mycursor.fetchone()
+                self.open_db()
+                edit_brand_box.mycursor.execute("SELECT BrandName FROM brand WHERE BrandId = "+str(self.ids))
+                x = edit_brand_box.mycursor.fetchone()
+                self.close_db()
+                self.open_db()
+                edit_brand_box.mycursor.execute("SELECT BrandId FROM brand WHERE BrandName = '"+b+"'")
+                y = edit_brand_box.mycursor.fetchone()
+                self.close_db()
                 if x[0] == b or y is None:
                     sql = "UPDATE brand set BrandName = '"+b+"', IsActive = '"+a+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+u+"' Where  BrandId = "+str(self.ids)
-                    global_variable.mycursor.execute(sql)
-                    global_variable.mydb.commit()
+                    self.open_db()
+                    edit_brand_box.mycursor.execute(sql)
+                    edit_brand_box.mydb.commit()
+                    self.close_db()
                     QMessageBox.information(self, "Message", "Data updated successfully!")
                     self.close()
                 else:

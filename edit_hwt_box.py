@@ -22,6 +22,8 @@ import edit_hwt
 
 class edit_hwt_box(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(edit_hwt_box, self).__init__()
         uic.loadUi('edit_hwt_box.ui', self)
         self.setWindowTitle("Hardware Service Manager - Hardware Edit")
@@ -32,9 +34,19 @@ class edit_hwt_box(QtWidgets.QDialog):
         self.generate()
         self.show()
 
+    def open_db(self):
+        edit_hwt_box.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_hwt_box.mycursor = edit_hwt_box.mydb.cursor()
+
+    def close_db(self):
+        edit_hwt_box.mycursor.close()
+        edit_hwt_box.mydb.close()
+
     def generate(self):
-        global_variable.mycursor.execute("SELECT IsActive from hardwaretype where HardwareName = '"+global_variable.HWT+"'")
-        data = global_variable.mycursor.fetchone()
+        self.open_db()
+        edit_hwt_box.mycursor.execute("SELECT IsActive from hardwaretype where HardwareName = '"+global_variable.HWT+"'")
+        data = edit_hwt_box.mycursor.fetchone()
+        self.close_db()
         if data[0]:
             self.hwt_active.setChecked(True)
         else:
@@ -53,8 +65,10 @@ class edit_hwt_box(QtWidgets.QDialog):
                 raise Exception()
             else:
                 sql = "UPDATE hardwaretype set IsActive = '"+a+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+u+"' Where HardwareName = '"+h+"'"
-                global_variable.mycursor.execute(sql)
-                global_variable.mydb.commit()
+                self.open_db()
+                edit_hwt_box.mycursor.execute(sql)
+                edit_hwt_box.mydb.commit()
+                self.close_db()
                 QMessageBox.information(self, "Message", "Data updated successfully!")
                 self.close()
         except:

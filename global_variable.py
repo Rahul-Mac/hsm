@@ -21,5 +21,5 @@ LOC = ""
 BRD = ""
 HWT = ""
 PBT = ""
-mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
-mycursor = mydb.cursor()
+#mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+#mycursor = mydb.cursor()

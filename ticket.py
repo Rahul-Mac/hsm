@@ -12,7 +12,7 @@ If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QMessageBox, QApplication, QCompleter
+from PyQt5.QtWidgets import QMessageBox, QApplication
 import mysql.connector
 import datetime
 import global_variable
@@ -20,13 +20,31 @@ import sys
 
 class ticket(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(ticket, self).__init__()
         uic.loadUi('ticket.ui', self)
         self.setWindowTitle("Ticket")
         self.ticket_box.setTitle(global_variable.TICKET)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
         self.save_btn.clicked.connect(self.save)
+        self.generate()
         self.show()
+
+    def open_db(self):
+        ticket.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        ticket.mycursor = ticket.mydb.cursor()
+
+    def close_db(self):
+        ticket.mycursor.close()
+        ticket.mydb.close()
+
+    def generate(self):
+        self.open_db()
+        ticket.mycursor.execute("SELECT Solution from transaction where TicketId = '"+global_variable.TICKET+"'")
+        data = ticket.mycursor.fetchone()
+        self.close_db()
+        self.solution.insertPlainText(data[0])
 
     def save(self):
         i = global_variable.USER_ID
@@ -38,14 +56,16 @@ class ticket(QtWidgets.QDialog):
         s = self.solution.toPlainText()
         try:
             if i == "" or a == "" or s == "" or t == "":
-                raise Exception()
+                QMessageBox.critical(self, "Error", "Empty fields are not allowed")
             else:
                 sql = "UPDATE transaction set IsActive = '"+str(a)+"', SolverId = '"+i+"', Solution = '"+s+"' where TicketId = '"+t+"'"
-                global_variable.mycursor.execute(sql)
-                global_variable.mydb.commit()
+                self.open_db()
+                ticket.mycursor.execute(sql)
+                ticket.mydb.commit()
+                self.close_db()
                 QMessageBox.information(self, "Message", "Transaction successful!")
                 self.close()
-        except:
-            QMessageBox.critical(self, "Error", "Transaction failed")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
 
         

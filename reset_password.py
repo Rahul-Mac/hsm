@@ -21,6 +21,8 @@ import sys
 
 class reset_password(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(reset_password, self).__init__()
         uic.loadUi('reset_password.ui', self)
         self.setWindowTitle("Reset Password")
@@ -30,9 +32,19 @@ class reset_password(QtWidgets.QDialog):
         self.get_users()
         self.show()
 
+    def open_db(self):
+        reset_password.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        reset_password.mycursor = reset_password.mydb.cursor()
+
+    def close_db(self):
+        reset_password.mycursor.close()
+        reset_password.mydb.close()
+
     def get_users(self):
-        global_variable.mycursor.execute("SELECT UserId FROM user;")
-        data = global_variable.mycursor.fetchall()
+        self.open_db()
+        reset_password.mycursor.execute("SELECT UserId FROM user;")
+        data = reset_password.mycursor.fetchall()
+        self.close_db()
         for d in data:
             self.user_id.addItem(d[0])
 
@@ -51,8 +63,10 @@ class reset_password(QtWidgets.QDialog):
             else:
                 p = hashlib.md5(p.encode('utf-8')).hexdigest()
                 sql = "UPDATE user set UserPassword = '"+p+"', UpdatedDateTime = '"+d+"', UpdatedUserId = '"+global_variable.USER_ID+"' Where UserId = '"+u+"'"
-                global_variable.mycursor.execute(sql)
-                global_variable.mydb.commit()
+                self.open_db()
+                reset_password.mycursor.execute(sql)
+                reset_password.mydb.commit()
+                self.close_db()
                 QMessageBox.information(self, "Message", "Password changed successfully!")
                 self.close()
         except:

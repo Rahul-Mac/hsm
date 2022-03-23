@@ -21,6 +21,8 @@ import sys
 
 class add_pbt(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(add_pbt, self).__init__()
         uic.loadUi('add_pbt.ui', self)
         self.setWindowTitle("Hardware Service Manager - Add Problem")
@@ -31,9 +33,19 @@ class add_pbt(QtWidgets.QDialog):
         self.get_hardware_types()
         self.show()
 
+    def open_db(self):
+        add_pbt.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_pbt.mycursor = add_pbt.mydb.cursor()
+
+    def close_db(self):
+        add_pbt.mycursor.close()
+        add_pbt.mydb.close()
+
     def get_hardware_types(self):
-        global_variable.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
-        self.hardwares = global_variable.mycursor.fetchall()
+        self.open_db()
+        add_pbt.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        self.hardwares = add_pbt.mycursor.fetchall()
+        self.close_db()
         for hardware in self.hardwares:
             self.hwt_combo.addItem(hardware[1])
 
@@ -59,12 +71,16 @@ class add_pbt(QtWidgets.QDialog):
             if p == "" or d == "" or u == "" or a == "" or h == "-- Select --" or h == "":
                 QMessageBox.critical(self, "Error", "Please fill the compulsory fields")
             else:
-                global_variable.mycursor.execute("SELECT ProblemId FROM problemtype WHERE ProblemDescription = '"+p+"'")
-                x = global_variable.mycursor.fetchone()
+                self.open_db()
+                add_pbt.mycursor.execute("SELECT ProblemId FROM problemtype WHERE ProblemDescription = '"+p+"'")
+                x = add_pbt.mycursor.fetchone()
+                self.close_db()
                 if x is None:
                     sql = "INSERT INTO problemtype (ProblemDescription, CreatedDateTime, CreatedUserId, UpdatedDateTime, UpdatedUserId, IsActive, HardwareId) VALUES ('"+p+"', '"+d+"', '"+u+"', '"+d+"', '"+u+"', '"+a+"', '"+str(h)+"')"
-                    global_variable.mycursor.execute(sql)
-                    global_variable.mydb.commit()
+                    self.open_db()
+                    add_pbt.mycursor.execute(sql)
+                    add_pbt.mydb.commit()
+                    self.close_db()
                     QMessageBox.information(self, "Message", "Data registered successfully!")
                     self.reset()
                 else:

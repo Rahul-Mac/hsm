@@ -21,6 +21,8 @@ import sys
 
 class add_loc(QtWidgets.QDialog):
     def __init__(self):
+        mydb = ""
+        mycursor = ""
         super(add_loc, self).__init__()
         uic.loadUi('add_loc.ui', self)
         self.setWindowTitle("Hardware Service Manager - Add Location")
@@ -30,6 +32,14 @@ class add_loc(QtWidgets.QDialog):
         self.loc_reset_btn.clicked.connect(self.reset_loc)
         self.loc_save_btn.clicked.connect(self.save_loc)
         self.show()
+
+    def open_db(self):
+        add_loc.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_loc.mycursor = add_loc.mydb.cursor()
+
+    def close_db(self):
+        add_loc.mycursor.close()
+        add_loc.mydb.close()
 
     def save_loc(self):
         l = self.loc_entry.text()
@@ -47,13 +57,17 @@ class add_loc(QtWidgets.QDialog):
             else:
                 if w == "-- Select --":
                     w = ''
-                global_variable.mycursor.execute("SELECT LocationId FROM location WHERE LocationName = '"+l+"'")
-                x = global_variable.mycursor.fetchone()
+                self.open_db()
+                add_loc.mycursor.execute("SELECT LocationId FROM location WHERE LocationName = '"+l+"'")
+                x = add_loc.mycursor.fetchone()
+                self.close_db()
                 if x is None:
                     sql = "INSERT INTO location (LocationName, Floor, Wing, CreatedDateTime, CreatedUserId, UpdatedDateTime, UpdatedUserId, IsActive) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
                     val = (l, f, w, d, u, d, u, a)
-                    global_variable.mycursor.execute(sql, val)
-                    global_variable.mydb.commit()
+                    self.open_db()
+                    add_loc.mycursor.execute(sql, val)
+                    add_loc.mydb.commit()
+                    self.close_db()
                     QMessageBox.information(self, "Message", "Data registered successfully!")
                     self.reset_loc()
                 else:
