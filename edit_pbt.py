@@ -49,7 +49,7 @@ class edit_pbt(QtWidgets.QDialog):
 
     def get_hardware(self, i):
         self.open_db()
-        edit_pbt.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
+        edit_pbt.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+";")
         x = edit_pbt.mycursor.fetchone()
         self.close_db()
         return(str(x[0]))

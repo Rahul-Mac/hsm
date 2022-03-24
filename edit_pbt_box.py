@@ -46,14 +46,14 @@ class edit_pbt_box(QtWidgets.QDialog):
 
     def get_hardware(self, i):
         self.open_db()
-        edit_pbt_box.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+" and IsActive = 1;")
+        edit_pbt_box.mycursor.execute("SELECT HardwareName FROM hardwaretype where HardwareId = "+str(i)+";")
         x = edit_pbt_box.mycursor.fetchone()
         self.close_db()
         return(str(x[0]))
 
     def get_hardware_types(self):
         self.open_db()
-        edit_pbt_box.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype where IsActive = 1;")
+        edit_pbt_box.mycursor.execute("SELECT HardwareId, HardwareName FROM hardwaretype;")
         self.hardwares = edit_pbt_box.mycursor.fetchall()
         self.close_db()
         for hardware in self.hardwares:

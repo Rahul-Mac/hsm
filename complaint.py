@@ -105,6 +105,9 @@ class complaint(QtWidgets.QDialog):
            QMessageBox.critical(self, "Error", "Data registration failed")
 
     def reset(self):
+        self.pbt_combo.clear()
+        self.pbt_combo.addItem("-- Select --")
+        self.pbt_combo.model().item(0).setEnabled(False)
         self.pbt_combo.setCurrentText("-- Select --")
         self.hwt_combo.setCurrentText("-- Select --")
         self.loc_combo.setCurrentText("-- Select --")

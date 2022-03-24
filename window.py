@@ -142,7 +142,7 @@ class window(QtWidgets.QMainWindow):
         QMessageBox().about(self, "License", text)
 
     def show_about(self):
-        text = "Hardware Service Manager v0.3.1\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
+        text = "Hardware Service Manager v0.3.2\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
         QMessageBox().about(self, "About HSM", text)
 
     def open_add_pbt(self):
