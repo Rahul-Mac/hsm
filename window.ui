@@ -738,6 +738,11 @@ QToolButton:checked{
     </column>
     <column>
      <property name="text">
+      <string>Solver</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
       <string>Solution</string>
      </property>
     </column>

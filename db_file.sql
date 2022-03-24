@@ -31,7 +31,7 @@ CREATE TABLE `brand` (
   `UpdatedUserId` varchar(20) NOT NULL,
   `UpdatedDateTime` datetime NOT NULL,
   PRIMARY KEY (`BrandId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `hardwaretype` (
   `UpdatedUserId` varchar(20) NOT NULL,
   `UpdatedDateTime` datetime NOT NULL,
   PRIMARY KEY (`HardwareId`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='Different types of hardware will be enlisted';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 COMMENT='Different types of hardware will be enlisted';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `location` (
   `UpdatedUserId` varchar(20) NOT NULL,
   `UpdatedDateTime` datetime NOT NULL,
   PRIMARY KEY (`LocationId`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +118,7 @@ CREATE TABLE `problemtype` (
   `UpdatedDateTime` datetime NOT NULL,
   `HardwareId` int(11) NOT NULL,
   PRIMARY KEY (`ProblemId`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,9 +179,9 @@ CREATE TABLE `transaction` (
   `IsActive` int(11) DEFAULT '1',
   `AdminId` varchar(20) NOT NULL,
   `SolverId` varchar(20) DEFAULT NULL,
-  `Solution` varchar(45) DEFAULT NULL,
+  `Solution` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ComplaintId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `user` (
   `UpdatedUserId` varchar(45) NOT NULL,
   `UpdatedDateTime` datetime NOT NULL,
   PRIMARY KEY (`UserIndex`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'root','ff9830c42660c1dd1942844f8069b74a','Admin','2022-02-18 10:39:10',1,'101','root','root','root','2022-03-08 13:33:27')
+INSERT INTO `user` VALUES (1,'root','ff9830c42660c1dd1942844f8069b74a','Admin','2022-02-18 10:39:10',1,'101','root','root','root','2022-03-23 10:12:18')
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -235,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-12 10:49:58
+-- Dump completed on 2022-03-24 12:45:32

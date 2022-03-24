@@ -142,7 +142,7 @@ class window(QtWidgets.QMainWindow):
         QMessageBox().about(self, "License", text)
 
     def show_about(self):
-        text = "Hardware Service Manager v0.3.0\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
+        text = "Hardware Service Manager v0.3.1\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
         QMessageBox().about(self, "About HSM", text)
 
     def open_add_pbt(self):
@@ -224,7 +224,7 @@ class window(QtWidgets.QMainWindow):
 
     def view_table(self):
         self.open_db()
-        window.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, Solution FROM transaction where IsActive = 1;")
+        window.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 1;")
         data = window.mycursor.fetchall()
         self.close_db()
         self.log_table.setRowCount(0)
@@ -249,6 +249,7 @@ class window(QtWidgets.QMainWindow):
             header.setSectionResizeMode(8, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents)
             for r in range(row):
                 for c in range(col):
                     d = data[r][c]
