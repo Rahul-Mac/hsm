@@ -21,5 +21,9 @@ LOC = ""
 BRD = ""
 HWT = ""
 PBT = ""
-#mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
-#mycursor = mydb.cursor()
+HARDWARE = ""
+PROBLEM = ""
+ASND = ""
+COMP = ""
+NAME = ""
+REMARK = ""

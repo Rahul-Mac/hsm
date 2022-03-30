@@ -66,6 +66,9 @@ class login(QtWidgets.QDialog):
                 self.t.show()
                 self.close()
             else:
-                self.w = window.window()
-                self.w.show()
-                self.close()
+                try:
+                    self.w = window.window()
+                    self.w.show()
+                    self.close()
+                except Exception as e:
+                    QMessageBox().critical(self, "Error", str(e))

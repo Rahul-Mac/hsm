@@ -19,6 +19,7 @@ import global_variable
 import sys
 from datetime import date
 from datetime import timedelta
+import pending
 
 class complaint(QtWidgets.QDialog):
     def __init__(self):
@@ -41,7 +42,12 @@ class complaint(QtWidgets.QDialog):
         self.hwt_combo.currentTextChanged.connect(self.on_hwt_chg)
         self.reset_details.clicked.connect(self.reset)
         self.save_details.clicked.connect(self.save)
+        self.pend.clicked.connect(self.show_pend)
         self.show()
+
+    def show_pend(self):
+        self.w = pending.pending()
+        self.w.show()
 
     def open_db(self):
         complaint.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")

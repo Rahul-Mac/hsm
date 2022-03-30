@@ -39,6 +39,7 @@ import com_log
 import manual
 import login
 import reset_password
+import info
 
 class window(QtWidgets.QMainWindow):
     def __init__(self):
@@ -57,6 +58,8 @@ class window(QtWidgets.QMainWindow):
         self.com_log.setText("Completed\nTable")
         self.rst_pass.setText("Reset\nPassword")
         self.report.setText("Export To\nXLSX")
+        self.add_hardware.setText("Add\nHardware")
+        self.edit_hardware.setText("Edit\nHardware")
         self.show()
 
     def open_db(self):
@@ -67,9 +70,20 @@ class window(QtWidgets.QMainWindow):
         window.mycursor.close()
         window.mydb.close()
         
-    def table_click(self, item):
+    def fix(self, item):
         global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
         self.pop = ticket.ticket()
+        self.pop.show()
+
+    def info(self, item):
+        global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
+        global_variable.HARDWARE = self.log_table.item(self.log_table.currentRow(), 2).text()
+        global_variable.PROBLEM = self.log_table.item(self.log_table.currentRow(), 1).text()
+        global_variable.ASND = self.log_table.item(self.log_table.currentRow(), 3).text()
+        global_variable.COMP = self.log_table.item(self.log_table.currentRow(), 4).text()
+        global_variable.NAME = self.log_table.item(self.log_table.currentRow(), 7).text()
+        global_variable.REMARK = self.log_table.item(self.log_table.currentRow(), 9).text()
+        self.pop = info.info()
         self.pop.show()
 
     def show_manual(self):
@@ -77,7 +91,8 @@ class window(QtWidgets.QMainWindow):
         self.pop.show()
         
     def connections(self):
-        self.log_table.doubleClicked.connect(self.table_click)
+        self.log_table.doubleClicked.connect(self.info)
+        self.service.clicked.connect(self.fix)
         self.manual.clicked.connect(self.show_manual)
         self.report.clicked.connect(self.gen_rep)
         self.full_log.clicked.connect(self.show_full_log)
@@ -98,6 +113,7 @@ class window(QtWidgets.QMainWindow):
         self.cmplnt.clicked.connect(self.show_complaint)
         self.about.clicked.connect(self.show_about)
         self.lic.clicked.connect(self.show_license)
+        self.quitapp.clicked.connect(self.close)
         self.problems = []
         self.hardwares = []
         self.locations = []
@@ -142,7 +158,7 @@ class window(QtWidgets.QMainWindow):
         QMessageBox().about(self, "License", text)
 
     def show_about(self):
-        text = "Hardware Service Manager v0.3.2\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
+        text = "Hardware Service Manager v0.4\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
         QMessageBox().about(self, "About HSM", text)
 
     def open_add_pbt(self):
@@ -190,8 +206,8 @@ class window(QtWidgets.QMainWindow):
         screenRect = desktop.screenGeometry()
         height = screenRect.height()
         width = screenRect.width()
-        self.ribbon.setGeometry(0, 0, width, 121)
-        self.log_table.setGeometry(0, 130, width, height-200)
+        self.ribbon.setGeometry(0, 0, width, 141)
+        self.log_table.setGeometry(0, 150, width, height-250)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
         self.showMaximized()
 
@@ -266,7 +282,6 @@ class window(QtWidgets.QMainWindow):
                             i = QTableWidgetItem("")
                         else:
                             i = QTableWidgetItem(str(d))
-                    i.setFlags(QtCore.Qt.ItemIsEnabled)
                     self.log_table.setItem(r, c, i)
         except:
             QMessageBox.critical(self, "Error", "Failed to load data")
