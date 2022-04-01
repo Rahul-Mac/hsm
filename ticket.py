@@ -28,6 +28,7 @@ class ticket(QtWidgets.QDialog):
         self.ticket_box.setTitle(global_variable.TICKET)
         self.setWindowIcon(QtGui.QIcon('icon.ico'))
         self.save_btn.clicked.connect(self.save)
+        self.status.model().item(0).setEnabled(False)
         self.generate()
         self.show()
 
@@ -41,24 +42,22 @@ class ticket(QtWidgets.QDialog):
 
     def generate(self):
         self.open_db()
-        ticket.mycursor.execute("SELECT Solution from transaction where TicketId = '"+global_variable.TICKET+"'")
+        ticket.mycursor.execute("SELECT Status, Solution from transaction where TicketId = '"+global_variable.TICKET+"'")
         data = ticket.mycursor.fetchone()
         self.close_db()
-        self.solution.insertPlainText(data[0])
+        self.status.setCurrentText(data[0])
+        self.solution.insertPlainText(data[1])
 
     def save(self):
         i = global_variable.USER_ID
         t = global_variable.TICKET
-        if self.pending.isChecked():
-            a = '1'
-        else:
-            a = '0'
+        a = self.status.currentText()
         s = self.solution.toPlainText()
         try:
-            if i == "" or a == "" or s == "" or t == "":
+            if i == "" or a == "" or a == "-- Select --" or s == "" or t == "":
                 QMessageBox.critical(self, "Error", "Empty fields are not allowed")
             else:
-                sql = "UPDATE transaction set IsActive = '"+str(a)+"', SolverId = '"+i+"', Solution = '"+s+"' where TicketId = '"+t+"'"
+                sql = "UPDATE transaction set Status = '"+str(a)+"', SolverId = '"+i+"', Solution = '"+s+"' where TicketId = '"+t+"'"
                 self.open_db()
                 ticket.mycursor.execute(sql)
                 ticket.mydb.commit()

@@ -74,7 +74,7 @@ class com_log(QtWidgets.QDialog):
 
     def fetch(self, text):
         self.open_db()
-        com_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 0 AND TicketId like '%"+text+"%';")
+        com_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where Status = 'Completed' AND TicketId like '%"+text+"%';")
         data = com_log.mycursor.fetchall()
         self.close_db()
         self.log_table.setRowCount(0)
@@ -123,7 +123,7 @@ class com_log(QtWidgets.QDialog):
 
     def generate(self):
         self.open_db()
-        com_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 0;")
+        com_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where Status = 'Completed';")
         data = com_log.mycursor.fetchall()
         self.close_db()
         self.log_table.setRowCount(0)

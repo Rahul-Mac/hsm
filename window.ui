@@ -1042,7 +1042,7 @@ QToolButton:checked{
     </column>
     <column>
      <property name="text">
-      <string>Assigned To</string>
+      <string>Spoken To</string>
      </property>
     </column>
     <column>
@@ -1073,6 +1073,11 @@ QToolButton:checked{
     <column>
      <property name="text">
       <string>Remark</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Status</string>
      </property>
     </column>
     <column>

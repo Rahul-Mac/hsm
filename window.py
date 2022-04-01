@@ -71,9 +71,15 @@ class window(QtWidgets.QMainWindow):
         window.mydb.close()
         
     def fix(self, item):
-        global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
-        self.pop = ticket.ticket()
-        self.pop.show()
+        if self.log_table.rowCount() == 0:
+            QMessageBox().critical(self, "Error", "There are no pending complaints")
+        else:
+            if len(self.log_table.selectedIndexes()) == 0:
+                QMessageBox().critical(self, "Error", "Complaint not selected")
+            else:
+                global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
+                self.pop = ticket.ticket()
+                self.pop.show()
 
     def info(self, item):
         global_variable.TICKET = self.log_table.item(self.log_table.currentRow(), 0).text()
@@ -158,7 +164,7 @@ class window(QtWidgets.QMainWindow):
         QMessageBox().about(self, "License", text)
 
     def show_about(self):
-        text = "Hardware Service Manager v0.4\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
+        text = "Hardware Service Manager v0.5.1\nis a service management software\nfor hardware components.\n\nCopyright (C) 2022 Rahul Mac\n under GNU GPL v3 License"
         QMessageBox().about(self, "About HSM", text)
 
     def open_add_pbt(self):
@@ -240,7 +246,7 @@ class window(QtWidgets.QMainWindow):
 
     def view_table(self):
         self.open_db()
-        window.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where IsActive = 1;")
+        window.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, Status, SolverId, Solution FROM transaction where not Status = 'Completed';")
         data = window.mycursor.fetchall()
         self.close_db()
         self.log_table.setRowCount(0)
@@ -266,6 +272,7 @@ class window(QtWidgets.QMainWindow):
             header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(12, QtWidgets.QHeaderView.ResizeToContents)
             for r in range(row):
                 for c in range(col):
                     d = data[r][c]

@@ -37,103 +37,74 @@
     <bool>true</bool>
    </property>
    <property name="plainText">
-    <string>Hardware Service Manager (HSM)
+    <string>Hardware Service Manager (HSM) v0.5.1
 
 HSM is a desktop application used for servicing hardware components.
 It has two modes - Admin and Client.
 
-Login
+### Login ###
 
 The user should enter their login credentials to access the software.
 Depending on the privileges, the user will be directed to a screen.
 
-Ribbon Bar
+### Window ###
 
-The HSM ribbon bar has four tabs - Add, Edit, Tasks and Help.
+The window consists of ribbon bar and log table
 
-Add
-	Buttons for adding
-	User, Location, Hardware, Brand, and Problem
+** Ribbon Bar **
 
-Edit
-	Buttons for editing
-	User, Location, Hardware, Brand, Problem
-	and Resetting password
+The HSM ribbon bar has three tabs - Home, Master and Help.
 
-Tasks
+== Home ==
+-&gt; Table
+	Refresh Table - Fetches the latest data for the pending log (main log)
+	Full Log - Displays all the complaints
+	Completed Table - Displays completed complaints
 
-Generate Report
-	A popup will appear which asks for the file name,
-	folder, start date and end date. After clicking on
-	&quot;Export&quot;, a .csv file will be generated in the 
-	mentioned file location. 	
-	&quot;Reset&quot; button clears the details entered.
+-&gt; Complaint
+	Complaint - Register a complaint
+	Service - Service the complaint (Single selection)
+	Export To XLSX - XLSX file that displays information about complaints
 
-Complaint 
+-&gt; Exit Session
+	Log Out - Logs out the user and displays login screen
+	Quit - Closes the application
 
-	&quot;Ticked ID&quot; 
-		It is an auto-generated field.
+== Master ==
+-&gt; User
+	Add User - Create New User
+	Edit User - Edit the user by selecting from the log
+	Reset Password - Reset Password for user(s)
 
-	Hardware
-		The hardware that needs 
-		servicing should be selected.
+-&gt; Hardware
+	Add Hardware - Create New Hardware
+	Edit Hardware - Edit the hardware by selecting from the log
 
-	Problem
-		The issue with the selected hardware.
+-&gt; Problem
+	Add Problem - Create New Problem
+	Edit Problem - Edit the problem by selecting from the log
 
-	System Name (Optional Field)
-		Name assigned to the hardware.
+-&gt; Location
+	Add Location - Create New Location
+	Edit Location - Edit the location by selecting from the log
 
-	Location
-		Location of the hardware.
+-&gt; Brand
+	Add Brand - Create New Brand
+	Edit Brand - Edit the brand by selecting from the log
 
-	Spoken To
-		The name of the administrator 
-		with whom the client spoke.
+== Help ==
+-&gt; Information
+	About - Brief information about the software
+	License - License notice of the software 
 
-	Caller Name
-		Name of the client
+-&gt; How To Use
+	Manual - The document that you are currently reading
 
-	Remarks (Optional Field)
-		Additional information about 
-		the hardware that the 
-		client wants to provide.
-
-	Save
-		Registers the complaint.
-
-	Reset
-		Resets the data.
-
-Refresh Log
-	Refreshes the &quot;Pending Log&quot; i.e. 
-	the log on the window.
-
-Full Log 
-	Dsiplays all the complaints.
-
-Completed Log 
-	Dsiplays the solved issues.
+** Pending Log **
+Pending Log displays information about all the complaints that are pending
 
 
-Help
-
-About 
-	Brief information about the software
-
-License 
-	License of the software 
-
-Manual 
-	The document that you are currently reading
-
-Toolbar
-	Icons for operations like Refresh, Adding users,
-	Generating Report, etc.
-
-
-Written by
-	Rahul Mac</string>
+Written by Rahul Mac</string>
    </property>
   </widget>
  </widget>

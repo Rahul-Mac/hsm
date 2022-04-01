@@ -74,7 +74,7 @@ class full_log(QtWidgets.QDialog):
 
     def fetch(self, text):
         self.open_db()
-        full_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, IsActive, Remark, SolverId, Solution FROM transaction where TicketId like '%"+text+"%';")
+        full_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Status, Remark, SolverId, Solution FROM transaction where TicketId like '%"+text+"%';")
         data = full_log.mycursor.fetchall()
         self.close_db()
         self.log_table.setRowCount(0)
@@ -99,7 +99,6 @@ class full_log(QtWidgets.QDialog):
             header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents)
-            #header.setSectionResizeMode(12, QtWidgets.QHeaderView.Stretch)
             for r in range(row):
                 for c in range(col):
                     d = data[r][c]
@@ -111,11 +110,6 @@ class full_log(QtWidgets.QDialog):
                         i = QTableWidgetItem(self.get_hardware_name(d))
                     elif c == 6:
                         i = QTableWidgetItem(self.get_location_name(d))
-                    elif c == 9:
-                        if d:
-                            i = QTableWidgetItem("Yes")
-                        else:
-                            i = QTableWidgetItem("No")
                     else:
                         if d == "NULL":
                             i = QTableWidgetItem("")
@@ -129,7 +123,7 @@ class full_log(QtWidgets.QDialog):
 
     def generate(self):
         self.open_db()
-        full_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, IsActive, Remark, SolverId, Solution FROM transaction;")
+        full_log.mycursor.execute("SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Status, Remark, SolverId, Solution FROM transaction;")
         data = full_log.mycursor.fetchall()
         self.close_db()
         self.log_table.setRowCount(0)
@@ -155,7 +149,6 @@ class full_log(QtWidgets.QDialog):
             header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents)
             header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents)
-            #header.setSectionResizeMode(12, QtWidgets.QHeaderView.Stretch)
             for r in range(row):
                 for c in range(col):
                     d = data[r][c]
@@ -167,11 +160,6 @@ class full_log(QtWidgets.QDialog):
                         i = QTableWidgetItem(self.get_hardware_name(d))
                     elif c == 6:
                         i = QTableWidgetItem(self.get_location_name(d))
-                    elif c == 9:
-                        if d:
-                            i = QTableWidgetItem("Yes")
-                        else:
-                            i = QTableWidgetItem("No")
                     else:
                         if d == "NULL":
                             i = QTableWidgetItem("")

@@ -64,7 +64,7 @@ class pending(QtWidgets.QDialog):
     def generate(self):
         try:
             self.open_db()
-            sql = "SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where CreatedUserId = '"+global_variable.USER_ID+"' and IsActive = 1;"
+            sql = "SELECT TicketId, ProblemId, HardwareId, AdminId, CreatedUserId, CreatedDateTime, LocationId, Name, SystemName, Remark, SolverId, Solution FROM transaction where CreatedUserId = '"+global_variable.USER_ID+"' and not Status = 'Completed';"
             pending.mycursor.execute(sql)
             data = pending.mycursor.fetchall()
             self.close_db()

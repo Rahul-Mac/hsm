@@ -55,7 +55,7 @@
    </column>
    <column>
     <property name="text">
-     <string>Assigned To</string>
+     <string>Spoken To</string>
     </property>
    </column>
    <column>
@@ -85,7 +85,7 @@
    </column>
    <column>
     <property name="text">
-     <string>Pending</string>
+     <string>Status</string>
     </property>
    </column>
    <column>
