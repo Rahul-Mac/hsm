@@ -16,3 +16,8 @@ This software is used to store complaints of hardware related issues and write a
   ```
     python main.py
   ```
+* Login credentials
+  ```
+    User ID: root
+    Password: root123
+  ```
