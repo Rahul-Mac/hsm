@@ -34,7 +34,7 @@ class add_pbt(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        add_pbt.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_pbt.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         add_pbt.mycursor = add_pbt.mydb.cursor()
 
     def close_db(self):

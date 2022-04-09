@@ -50,7 +50,7 @@ class complaint(QtWidgets.QDialog):
         self.w.show()
 
     def open_db(self):
-        complaint.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        complaint.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         complaint.mycursor = complaint.mydb.cursor()
 
     def close_db(self):

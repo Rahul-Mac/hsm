@@ -1,0 +1,2 @@
+AppId={{59C53B3F-2AD6-4E94-AAA4-844261F5C199}
+UsePreviousAppDir=yes

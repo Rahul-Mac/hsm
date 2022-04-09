@@ -34,7 +34,7 @@ class edit_loc(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        edit_loc.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_loc.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         edit_loc.mycursor = edit_loc.mydb.cursor()
 
     def close_db(self):

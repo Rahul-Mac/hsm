@@ -34,7 +34,7 @@ class edit_user(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        edit_user.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        edit_user.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         edit_user.mycursor = edit_user.mydb.cursor()
 
     def close_db(self):

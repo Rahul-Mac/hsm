@@ -33,7 +33,7 @@ class ticket(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        ticket.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        ticket.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         ticket.mycursor = ticket.mydb.cursor()
 
     def close_db(self):

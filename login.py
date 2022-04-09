@@ -38,7 +38,7 @@ class login(QtWidgets.QDialog):
             if u == "" or p == "":
                 QMessageBox().critical(self, "Error", "Empty fields are not allowed")
             else:
-                mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+                mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
                 mycursor = mydb.cursor()
                 mycursor.execute("SELECT UserType FROM user WHERE UserId = '"+u+"' AND UserPassword = '"+p+"' AND IsActive = 1;")
                 global_variable.USER_TYPE = mycursor.fetchone()[0]

@@ -11,7 +11,6 @@ You should have received a copy of the GNU General Public License along with Har
 If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import mysql.connector
 USER_ID = ""
 USER_TYPE = ""
 TICKET = ""
@@ -27,3 +26,4 @@ ASND = ""
 COMP = ""
 NAME = ""
 REMARK = ""
+SERVER = "GMIT.LHDOMAIN.LOCAL"

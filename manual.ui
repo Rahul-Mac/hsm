@@ -37,7 +37,7 @@
     <bool>true</bool>
    </property>
    <property name="plainText">
-    <string>Hardware Service Manager (HSM) v0.5.1
+    <string>Hardware Service Manager (HSM) v0.5.2
 
 HSM is a desktop application used for servicing hardware components.
 It has two modes - Admin and Client.

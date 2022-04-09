@@ -40,7 +40,7 @@ class generate_report(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        generate_report.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        generate_report.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         generate_report.mycursor = generate_report.mydb.cursor()
 
     def close_db(self):

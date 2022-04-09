@@ -32,7 +32,7 @@ class add_hwt(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        add_hwt.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        add_hwt.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         add_hwt.mycursor = add_hwt.mydb.cursor()
 
     def close_db(self):

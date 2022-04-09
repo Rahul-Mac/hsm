@@ -33,7 +33,7 @@ class reset_password(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        reset_password.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        reset_password.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         reset_password.mycursor = reset_password.mydb.cursor()
 
     def close_db(self):

@@ -27,7 +27,7 @@ class pending(QtWidgets.QDialog):
         self.show()
 
     def open_db(self):
-        pending.mydb = mysql.connector.connect(host = "GMIT.LHDOMAIN.LOCAL", user = "root", password = "root", database = "servicemgmt")
+        pending.mydb = mysql.connector.connect(host = global_variable.SERVER, user = "root", password = "root", database = "servicemgmt")
         pending.mycursor = pending.mydb.cursor()
 
     def close_db(self):
